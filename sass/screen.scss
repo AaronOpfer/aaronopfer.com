@@ -1,0 +1,167 @@
+
+@import "compass/reset";
+@import "compass/css3/images";
+@import "compass/css3/box-sizing";
+@import "compass/css3/border-radius";
+@import "compass/css3/box-shadow";
+$bgcolor-gradient: #528aab;
+$bgcolor: #105577;
+$selcolor: rgb(48,176,232);
+
+body,html {
+	height: 100%;
+	margin:0;
+	padding:0;
+}
+
+* {
+	@include box-sizing(border-box);
+}
+
+body {
+	max-width: 900px;
+	margin: auto;
+	
+	color: white;
+	
+	@include background(linear-gradient($bgcolor-gradient,$bgcolor),$bgcolor);
+	
+	background-size: 100% 128px, auto;
+	background-repeat: no-repeat;
+	background-position: top left;
+	
+	font-family: Arial,Verdana,sans-serif;
+	font-size: 62.5%;
+	> * {
+		font-size: 1.7em;
+	}
+}
+
+
+header {
+	@include border-radius(10px);
+
+	margin-top: 128px;
+	border-top: 4px solid darken($bgcolor,5%);
+	border-bottom: 4px solid darken($bgcolor,6%);
+	overflow: hidden;
+	font-weight: bold;
+	
+	@media (min-width: 420px) {
+		height: 68px;
+	}
+
+	
+	h1 {
+		text-align: center;
+		width: 100%;
+		
+		@media (min-width: 420px) {
+			float:left;
+			width: auto;
+			margin-left:15px;
+		}
+		
+		display: table;
+		overflow: auto;
+		font-size: 1.5em;
+		height: 100%;
+		
+		
+		span {
+			display: table-cell;
+			vertical-align: middle;
+			height: 50px; // sets "minimum height" because tables.
+		}
+	}
+	
+	ul {
+		width: 100%;
+		height: 100%;
+		
+		@media (min-width: 420px) {
+			float:right;
+			width: 50%;
+		}
+		font-size: 1.0rem;
+		
+		text-align: center;
+		overflow: hidden;
+		display: table;
+		
+		
+		li {
+			margin-right:1px;
+			display: table-cell;
+			vertical-align: middle;
+			height:50px; // sets "minimum height" because tables.
+			
+			@media (min-width: 420px) {
+				border-bottom: 3px solid darken($selcolor,18%);
+				border-top: 3px solid darken($selcolor,18%);
+			}
+			
+			@media (min-width: 640px) {
+				&:first-child {
+					border-left: 15px solid transparent;
+				}
+			}
+			
+			@media (min-width: 900px) {
+				&:last-child {
+					border-right: 15px solid transparent;
+				}
+			}
+			
+			&:hover {
+				color: $selcolor;
+				cursor: pointer;
+				background: darken($bgcolor,3%);
+				div {
+					border-right-color: transparent;
+				}
+			}
+			
+			&:not(:last-child,:hover) div {
+				border-right: 1px solid #666;
+			}
+		}
+	}
+}
+
+content {
+	display: block;
+	max-width: 900px;
+	margin: 5px 0;
+	padding: 15px;
+	background: darken($bgcolor,5%);
+	border: solid 1px darken($bgcolor,2%);
+	@include box-shadow(0 0 10px darken($bgcolor,6%),0 0 10px darken($bgcolor,6%) inset);
+	@include border-radius(10px);
+	min-height: 100px;
+	
+	p {
+		margin: 10px 0;
+	}
+	
+	
+	// for the front page objectivity joke.
+	.asterisk {
+		color: red;
+	}
+	
+	#disclaimer {
+		font-size: 0.7rem;
+		font-style: italic;
+	}
+}
+
+#gravatar {
+	float: right;
+	margin:10px;
+	@include border-radius(5px);
+}
+
+footer {
+	
+}
