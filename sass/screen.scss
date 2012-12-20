@@ -5,10 +5,9 @@
 @import "compass/css3/border-radius";
 @import "compass/css3/box-shadow";
 @import "compass/css3/user-interface";
+@import "compass/utilities/sprites/base";
 
-$social-sprite-dimensions: true;
-$social-layout:smart;
-@import "social/*.png";
+
 $bgcolor-gradient: #528aab;
 $bgcolor: #105577;
 $selcolor: rgb(48,176,232);
@@ -21,6 +20,15 @@ body,html {
 
 * {
 	@include box-sizing(border-box);
+}
+
+a {
+	&:link, &:visited {
+		color: $selcolor;
+	}
+	&:hover, &:active {
+		color: #e83054;
+	}
 }
 
 body {
@@ -46,7 +54,7 @@ body {
 header {
 	@include border-radius(10px);
 
-	margin-top: 128px;
+	margin-top: 20px;
 	border-top: 4px solid darken($bgcolor,5%);
 	border-bottom: 4px solid darken($bgcolor,6%);
 	overflow: hidden;
@@ -69,7 +77,6 @@ header {
 		
 		display: table;
 		overflow: auto;
-		font-size: 1.5em;
 		height: 100%;
 		
 		
@@ -150,7 +157,22 @@ content {
 	min-height: 100px;
 	
 	article {
+		line-height: 120%;
 		padding: 15px;
+		
+		h1,h2,h3,h4,h5,h6 {
+			margin: 1px 0;
+		}
+		
+		li {
+			margin-left: 30px;
+		}
+		ul {
+			list-style: disc;
+		}
+		ul ul {
+			list-style: square;
+		}
 	}
 	
 	p {
@@ -175,10 +197,27 @@ content {
 	@include border-radius(5px);
 }
 
-@mixin footer-anchor-icon($icon) {
-	@include social-sprite($icon);
+$social-sprites: sprite-map('social/*.png');
+
+@mixin footer-anchor-icon($name) {
+	background-image: sprite-url($social-sprites);
+	
+	height: image-height(sprite-file($social-sprites, $name));
+	width: image-width(sprite-file($social-sprites, $name));
+	
+	$xpos: round(nth(sprite-position($social-sprites, $name), 1) / 2);
+	$ypos: round(nth(sprite-position($social-sprites, $name), 2) / 2);
+	background-position: $xpos $ypos;
+
+	background-size: 32px auto;
+	
 	display: inline-block;
-	font-size: 0px;
+	-webkit-text-size-adjust: none;
+	overflow: hidden;
+	line-height:1000px;
+	font-size: 0;
+	height:32px;
+	width:32px;
 }
 
 footer {
@@ -192,26 +231,31 @@ footer {
 	}
 	
 	a[title="Facebook"] {
-		@include footer-anchor-icon(facebook-32x32);
+		@include footer-anchor-icon(facebook-64x64);
 	}
 	a[title="SoundCloud"] {
-		@include footer-anchor-icon(soundcloud-32x32);
+		@include footer-anchor-icon(soundcloud-64x64);
 	}
 	a[title="GitHub"] {
-		@include footer-anchor-icon(github-32x32);
+		@include footer-anchor-icon(github-64x64);
 	}
 	a[title="LinkedIn"] {
-		@include footer-anchor-icon(linkedin-32x32);
+		@include footer-anchor-icon(linkedin-64x64);
 	}
 	a[title="Email"] {
-		@include footer-anchor-icon(gmail-32x32);
+		@include footer-anchor-icon(gmail-64x64);
 	}
 	a[title="Reddit"] {
-		@include footer-anchor-icon(reddit-32x32);
+		@include footer-anchor-icon(reddit-64x64);
+	}
+	a[title="YouTube"] {
+		@include footer-anchor-icon(youtube-64x64);
+	}
+	a[title="MySpace"] {
+		@include footer-anchor-icon(myspace-64x64);
 	}
 	
 }
-
 
 // This stuff is for swipe.js
 content {
@@ -230,3 +274,40 @@ content {
 		}
 	}
 }
+
+// music page controls
+#controls {
+	overflow: hidden;
+	font-weight: bold;
+	font-size: 1.0rem;
+	text-decoration: underline;
+	> span {
+		cursor: pointer;
+	}
+	padding: 5px 0;
+	
+}
+
+#prev_album {
+	float: left;
+	body.first_album & {
+		display: none;
+	}
+}
+#next_album {
+	float: right;
+	body.last_album & {
+		display: none;
+	}
+}
+
+
+h1,h2,h3,h4,h5,h6 {
+	font-weight: bold;
+}
+@for $index from 1 through 6 {
+	h#{$index} {
+		font-size: 1.6em - (0.25 * $index);
+	}
+}
+
