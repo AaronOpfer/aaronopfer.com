@@ -21,33 +21,116 @@
 		</header>
 		
 		<content>
-		
-			<img id=gravatar src="https://secure.gravatar.com/avatar/63f6aa22eee34930753969832d205da1?s=128" alt="Aaron Opfer">
-			<p>
-				Aaron Opfer is a pretty great.<sup class=asterisk>*</sup>
-			</p>
-			
-			
-			<p>He lives in the Pittsburgh area. He is a software developer by trade, indie musician by night and avid fan of the color orange. He loves Linux, FOSS and the EFF,
-			and begs for forgiveness to the unix gods for using Windows at home. He codes while listening to the same 32 bars of music loop for hours. He enjoys video games.
-			</p>
-			
-			<p>This is his domain.</p>
-			
-			<p>This may or may not have been autobiographical.</p>
-			
-			<span id=disclaimer>
-				<sup class=asterisk>*</sup> This statement is not an FDA approved fact, and is in fact, not a fact.
-			</span>
+			<div class='swipe-wrap'>
+				<article>
+					<img id=gravatar src="https://secure.gravatar.com/avatar/63f6aa22eee34930753969832d205da1?s=128" alt="Aaron Opfer">
+					<p>
+						Aaron Opfer is a pretty great.<sup class=asterisk>*</sup>
+					</p>
+					
+					
+					<p>He lives in the Pittsburgh area. He is a software developer by trade, indie musician by night and avid fan of the color orange. He loves Linux, FOSS and the EFF,
+					and begs for forgiveness to the unix gods for using Windows at home. He codes while listening to the same 32 bars of music loop for hours. He enjoys video games.
+					</p>
+					
+					<p>This is his domain.</p>
+					
+					<p>This may or may not have been autobiographical.</p>
+					
+					<span id=disclaimer>
+						<sup class=asterisk>*</sup> This statement is not an FDA approved fact, and is in fact, not a fact.
+					</span>
+				</article>
+				
+				<article>
+					Career.
+				</article>
+				
+				<article>
+					Music.
+				</article>
+			</div>
 		</content>
 		
 		<footer>
-			<a title="Facebook" href="http://www.facebook.com/pages/Aaron-Opfer/88828971639">Facebook</a>
+			<a title="Facebook" href="http://www.facebook.com/aaronopfer">Facebook</a>
 			<a title="SoundCloud" href="http://soundcloud.com/aaronopfer">Soundcloud</a>
 			<a title="GitHub" href="https://github.com/aaronopfer">Github</a>
 			<a title="LinkedIn" href="http://www.linkedin.com/pub/aaron-opfer/62/385/a9/">LinkedIn</a>
 			<a title="Reddit" href="http://www.reddit.com/user/aaronopfer">Reddit</a>
 			<a title="Email" href="mailto:me@aaronopfer.com">Email</a>
 		</footer>
+		
+		<script src="js/swipe.js"></script>
+		<script>
+(function(){
+	'use strict';
+	var lis = document.querySelectorAll('header > ul > li')
+	, pageName = window.location.href.match("/([a-z]+)$")
+	, i
+	, swipe;
+
+	for (i = 0; i < lis.length; i++) {
+		(function (i){
+			lis[i].addEventListener('click',function(e){
+				if (e.which !== 1) {
+					return;
+				}
+				swipe.slide(i,200);
+			},false);
+		}(i));
+	}
+	
+	
+	if (pageName === null) {
+		pageName = "home";
+	} else {
+		pageName = pageName[1];
+	}
+	
+	for (i = 0; i < lis.length; i++) {
+		if (lis[i].children[0].innerHTML.toLowerCase() === pageName) {
+			break;
+		}
+	}
+	
+	if (i === lis.length) {
+		i = 0;
+	}
+	
+	lis[i].classList.add('selected');
+	
+	swipe = new Swipe(document.getElementsByTagName('content')[0],{
+		startSlide: i,
+		callback: function (index) {
+			var li = lis[index]
+			, i;
+			
+			for (i = 0; i < lis.length; i++) {
+				lis[i].classList.remove('selected');
+			}
+			
+			li.classList.add('selected');
+			
+			var url = li.children[0].innerHTML.toLowerCase();
+			
+			if (index == 0) {
+				url = window.location.href.match("^.+/")[0];
+			}
+			if (history.state === null || history.state.index !== index) {
+				history.pushState({index:index},false,url);
+			}
+		}
+	});
+	
+	window.addEventListener('popstate',function (e) {
+		if (e.state === null) {
+			return;
+		}
+		swipe.slide(e.state.index,55);
+	},false);
+}());
+		</script>
+		
 	</body>
 </html>

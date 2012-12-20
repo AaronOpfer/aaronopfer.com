@@ -4,6 +4,7 @@
 @import "compass/css3/box-sizing";
 @import "compass/css3/border-radius";
 @import "compass/css3/box-shadow";
+@import "compass/css3/user-interface";
 
 $social-sprite-dimensions: true;
 $social-layout:smart;
@@ -95,11 +96,12 @@ header {
 		
 		
 		li {
+			@include user-select(none);
 			margin-right:1px;
 			display: table-cell;
 			vertical-align: middle;
 			height:50px; // sets "minimum height" because tables.
-			
+			cursor: pointer;
 			@media (min-width: 420px) {
 				border-bottom: 3px solid darken($selcolor,18%);
 				border-top: 3px solid darken($selcolor,18%);
@@ -117,10 +119,13 @@ header {
 				}
 			}
 			
+			&.selected {
+				background: darken($bgcolor,2.5%);
+			}
+			
 			&:hover {
 				color: $selcolor;
-				cursor: pointer;
-				background: darken($bgcolor,3%);
+				background: darken($bgcolor,4%);
 				div {
 					border-right-color: transparent;
 				}
@@ -137,12 +142,16 @@ content {
 	display: block;
 	max-width: 900px;
 	margin: 5px 0;
-	padding: 15px;
+	
 	background: darken($bgcolor,5%);
 	border: solid 1px darken($bgcolor,2%);
 	@include box-shadow(0 0 10px darken($bgcolor,6%),0 0 10px darken($bgcolor,6%) inset);
 	@include border-radius(10px);
 	min-height: 100px;
+	
+	article {
+		padding: 15px;
+	}
 	
 	p {
 		margin: 10px 0;
@@ -166,8 +175,8 @@ content {
 	@include border-radius(5px);
 }
 
-@mixin footer-anchor-icon(icon) {
-	@include social-sprite(icon);
+@mixin footer-anchor-icon($icon) {
+	@include social-sprite($icon);
 	display: inline-block;
 	font-size: 0px;
 }
@@ -183,7 +192,6 @@ footer {
 	}
 	
 	a[title="Facebook"] {
-		@include 
 		@include footer-anchor-icon(facebook-32x32);
 	}
 	a[title="SoundCloud"] {
@@ -202,4 +210,23 @@ footer {
 		@include footer-anchor-icon(reddit-32x32);
 	}
 	
+}
+
+
+// This stuff is for swipe.js
+content {
+	overflow: hidden;
+	visibility: hidden;
+	position: relative;
+	
+	> div {
+		overflow: hidden;
+		position: relative;
+		
+		article {
+			float: left;
+			width: 100%;
+			position: relative;
+		}
+	}
 }
