@@ -82,7 +82,7 @@
 		var music_btn = document.getElementById('music_btn');
 		
 		music_btn.addEventListener('mouseover',initializeMusicPage,false);
-		setTimeout(initializeMusicPage,7500);
+		setTimeout(initializeMusicPage,15000);
 	}
 	
 	document.getElementById('prev_album').addEventListener('click', function (e) {
