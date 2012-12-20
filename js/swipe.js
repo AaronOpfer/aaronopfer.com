@@ -1,0 +1,1 @@
+../swipe/swipe.js
