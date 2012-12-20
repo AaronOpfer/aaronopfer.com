@@ -4,6 +4,10 @@
 @import "compass/css3/box-sizing";
 @import "compass/css3/border-radius";
 @import "compass/css3/box-shadow";
+
+$social-sprite-dimensions: true;
+$social-layout:smart;
+@import "social/*.png";
 $bgcolor-gradient: #528aab;
 $bgcolor: #105577;
 $selcolor: rgb(48,176,232);
@@ -162,6 +166,40 @@ content {
 	@include border-radius(5px);
 }
 
+@mixin footer-anchor-icon(icon) {
+	@include social-sprite(icon);
+	display: inline-block;
+	font-size: 0px;
+}
+
 footer {
+	text-align: right;
+
+	
+	margin: 0 15px;
+	
+	@media (min-width: 940px) {
+		margin: 0;
+	}
+	
+	a[title="Facebook"] {
+		@include 
+		@include footer-anchor-icon(facebook-32x32);
+	}
+	a[title="SoundCloud"] {
+		@include footer-anchor-icon(soundcloud-32x32);
+	}
+	a[title="GitHub"] {
+		@include footer-anchor-icon(github-32x32);
+	}
+	a[title="LinkedIn"] {
+		@include footer-anchor-icon(linkedin-32x32);
+	}
+	a[title="Email"] {
+		@include footer-anchor-icon(gmail-32x32);
+	}
+	a[title="Reddit"] {
+		@include footer-anchor-icon(reddit-32x32);
+	}
 	
 }
