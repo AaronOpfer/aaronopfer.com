@@ -4,6 +4,7 @@
 	var lis = document.querySelectorAll('header > ul > li')
 	, articles = document.querySelectorAll('content > div > article')
 	, pageName = window.location.href.match("/([a-z]+)$")
+	, playerIframe = null
 	, i
 	, swipe
 	, currentAlbum
@@ -20,9 +21,19 @@
 	, musicPageInitialized = false
 	
 	, loadMusic = function(index) {
-		var player = document.getElementById('soundcloud_player')
+		if (playerIframe === null) {
+			playerIframe = document.createElement('iframe');
+			playerIframe.setAttribute('width','100%');
+			playerIframe.setAttribute('height','350');
+			playerIframe.setAttribute('scrolling','no');
+			playerIframe.setAttribute('frameborder','no');
+			playerIframe.src = albumEmbeds[index].uri;
+			document.getElementById('soundcloud_player').appendChild(playerIframe);
+		} else {
+			//http://www.ozzu.com/programming-forum/ignoring-iframes-with-javascript-history-t67189.html
+			playerIframe.contentWindow.location.replace(albumEmbeds[index].uri);
+		}
 		
-		player.src = albumEmbeds[index].uri;
 		currentAlbum = index;
 		
 		if (index === 0) {
