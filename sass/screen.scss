@@ -60,6 +60,10 @@ body {
 	}
 }
 
+hr {
+	border: none;
+	border-bottom: 2px dotted $selcolor - $bgcolor;
+}
 
 header {
 	@include border-radius(10px);
