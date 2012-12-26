@@ -2,6 +2,7 @@
 
 	'use strict';
 	var lis = document.querySelectorAll('header > ul > li')
+	, articles = document.querySelectorAll('content > div > article')
 	, pageName = window.location.href.match("/([a-z]+)$")
 	, i
 	, swipe
@@ -63,7 +64,7 @@
 	}
 	
 	for (i = 0; i < lis.length; i++) {
-		if (lis[i].children[0].innerHTML.toLowerCase() === pageName) {
+		if (lis[i].innerHTML.toLowerCase() === pageName) {
 			break;
 		}
 	}
@@ -94,20 +95,23 @@
 	}, false);
 	
 	lis[i].classList.add('selected');
+	articles[i].classList.add('selected');
 	
 	swipe = new Swipe(document.getElementsByTagName('content')[0],{
 		startSlide: i,
-		callback: function (index) {
+		callback: function (index,ele) {
 			var li = lis[index]
 			, i;
 			
 			for (i = 0; i < lis.length; i++) {
 				lis[i].classList.remove('selected');
+				articles[i].classList.remove('selected');
 			}
 			
 			li.classList.add('selected');
+			ele.classList.add('selected');
 			
-			var url = li.children[0].innerHTML.toLowerCase();
+			var url = li.innerHTML.toLowerCase();
 			
 			if (url === "music") {
 				initializeMusicPage();

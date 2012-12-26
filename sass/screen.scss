@@ -7,13 +7,13 @@
 @import "compass/css3/user-interface";
 @import "compass/utilities/sprites/base";
 
+$experimental-support-for-svg: true;
 
 $bgcolor-gradient: #528aab;
 $bgcolor: #105577;
 $selcolor: rgb(48,176,232);
 
 body,html {
-	height: 100%;
 	margin:0;
 	padding:0;
 }
@@ -31,17 +31,24 @@ a {
 	}
 }
 
-body {
+body,content {
 	max-width: 900px;
+}
+
+body {
 	margin: auto;
-	
 	color: white;
 	
-	@include background(linear-gradient($bgcolor-gradient,$bgcolor),$bgcolor);
+	@include background(linear-gradient($bgcolor-gradient,$bgcolor),url('../images/test_bg.png'),$bgcolor);
 	
 	background-size: 100% 128px, auto;
-	background-repeat: no-repeat;
+	background-repeat: no-repeat,repeat;
 	background-position: top left;
+	
+	@media print {
+		color: black;
+		background: white;
+	}
 	
 	font-family: Arial,Verdana,sans-serif;
 	font-size: 62.5%;
@@ -59,6 +66,11 @@ header {
 	border-bottom: 4px solid darken($bgcolor,6%);
 	overflow: hidden;
 	font-weight: bold;
+	
+	@media print {
+		border: 1px solid black;
+		@include border-radius(10px);
+	}
 	
 	@media (min-width: 420px) {
 		height: 68px;
@@ -101,6 +113,10 @@ header {
 		overflow: hidden;
 		display: table;
 		
+		@media print {
+			padding: 5px;
+		}
+		
 		
 		li {
 			@include user-select(none);
@@ -126,20 +142,22 @@ header {
 				}
 			}
 			
+			@media print { 
+				border: none;
+			}
+			
 			&.selected {
 				background: darken($bgcolor,2.5%);
+				@media print {
+					background: auto;
+					border: 1px solid black;
+					@include border-radius(10px);
+				}
 			}
 			
 			&:hover {
 				color: $selcolor;
 				background: darken($bgcolor,4%);
-				div {
-					border-right-color: transparent;
-				}
-			}
-			
-			&:not(:last-child,:hover) div {
-				border-right: 1px solid #666;
 			}
 		}
 	}
@@ -147,7 +165,6 @@ header {
 
 content {
 	display: block;
-	max-width: 900px;
 	margin: 5px 0;
 	
 	background: darken($bgcolor,5%);
@@ -222,8 +239,6 @@ $social-sprites: sprite-map('social/*.png');
 
 footer {
 	text-align: right;
-
-	
 	margin: 0 15px;
 	
 	@media (min-width: 940px) {
@@ -258,20 +273,31 @@ footer {
 }
 
 // This stuff is for swipe.js
-content {
-	overflow: hidden;
-	visibility: hidden;
-	position: relative;
-	
-	> div {
-		overflow: hidden;
+@media screen {
+	content {
+		visibility: hidden;
 		position: relative;
+		overflow: hidden;
 		
-		article {
-			float: left;
-			width: 100%;
+		> div {
+			overflow: hidden;
 			position: relative;
+			
+			article {
+				float: left;
+				width: 100%;
+				position: relative;
+			}
 		}
+	}
+}
+
+@media print {
+	article {
+		display: none;
+	}
+	article.selected {
+		display: block;
 	}
 }
 
