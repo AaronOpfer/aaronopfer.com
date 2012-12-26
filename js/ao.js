@@ -28,6 +28,10 @@
 	, musicPageInitialized = false
 	
 	, loadMusic = function(index) {
+		if (index < 0 || index >= albumEmbeds.length) {
+			return;
+		}
+	
 		var url = "https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Fplaylists%2F" + albumEmbeds[index].uri + "&amp;color=30b0e8&amp;auto_play=false&amp;show_artwork=true";
 
 		if (playerIframe === null) {
@@ -42,6 +46,7 @@
 			playerIframe.contentWindow.location.replace(url);
 		}
 		resizePlayer();
+		document.getElementById('album_name').innerHTML = albumEmbeds[index].name;
 		currentAlbum = index;
 		
 		if (index === 0) {
@@ -69,8 +74,6 @@
 	
 	, setPageTitle = function (pageName) {
 		document.title = "Aaron Opfer - "+pageName[0].toUpperCase() + pageName.slice(1);
-		
-		console.log(document.title);
 	}
 	
 	, resizePlayer = function (evt) {
@@ -127,10 +130,6 @@
 		i = 0;
 	}
 	
-	
-	
-
-	
 	document.getElementById('prev_album').addEventListener('click', function (e) {
 		loadMusic(currentAlbum-1);
 	}, false);
@@ -139,9 +138,17 @@
 		loadMusic(currentAlbum+1);
 	}, false);
 	
+	window.addEventListener('popstate',function (e) {
+		if (e.state === null) {
+			return;
+		}
+		swipe.slide(e.state.index,55);
+	},false);
+	
 	lis[i].classList.add('selected');
 	articles[i].classList.add('selected');
 	setPageTitle(pageName);
+	
 	
 	swipe = new Swipe(document.getElementsByTagName('content')[0],{
 		startSlide: i,
@@ -189,10 +196,4 @@
 		setTimeout(initializeMusicPage,15000);
 	}
 	
-	window.addEventListener('popstate',function (e) {
-		if (e.state === null) {
-			return;
-		}
-		swipe.slide(e.state.index,55);
-	},false);
 }());

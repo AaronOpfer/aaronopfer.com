@@ -6,12 +6,15 @@
 @import "compass/css3/box-shadow";
 @import "compass/css3/user-interface";
 @import "compass/utilities/sprites/base";
+@import "compass/css3/transition";
+@import "compass/css3/box-shadow";
 
 $experimental-support-for-svg: true;
 
 $bgcolor-gradient: #528aab;
 $bgcolor: #105577;
 $selcolor: rgb(48,176,232);
+$activecolor: #e83054;
 
 body,html {
 	margin:0;
@@ -27,11 +30,11 @@ a {
 		color: $selcolor;
 	}
 	&:hover, &:active {
-		color: #e83054;
+		color: $activecolor;
 	}
 }
 
-body,content {
+body,content,article {
 	max-width: 900px;
 }
 
@@ -228,59 +231,64 @@ content {
 $social-sprites: sprite-map('social/*.png');
 
 @mixin footer-anchor-icon($name) {
-	background-image: sprite-url($social-sprites);
-	
+	/*
 	height: image-height(sprite-file($social-sprites, $name));
 	width: image-width(sprite-file($social-sprites, $name));
-	
+	*/
 	$xpos: round(nth(sprite-position($social-sprites, $name), 1) / 2);
 	$ypos: round(nth(sprite-position($social-sprites, $name), 2) / 2);
 	background-position: $xpos $ypos;
-
-	background-size: 32px auto;
-	
-	display: inline-block;
-	-webkit-text-size-adjust: none;
-	overflow: hidden;
-	line-height:1000px;
-	font-size: 0;
-	height:32px;
-	width:32px;
 }
 
 footer {
-	text-align: right;
+	//text-align: right;
 	margin: 0 15px;
+	height: 32px;
+	line-height:32px;
 	
 	@media (min-width: 940px) {
 		margin: 0;
 	}
 	
-	a[title="Facebook"] {
-		@include footer-anchor-icon(facebook-64x64);
-	}
-	a[title="SoundCloud"] {
-		@include footer-anchor-icon(soundcloud-64x64);
-	}
-	a[title="GitHub"] {
-		@include footer-anchor-icon(github-64x64);
-	}
-	a[title="LinkedIn"] {
-		@include footer-anchor-icon(linkedin-64x64);
-	}
-	a[title="Email"] {
-		@include footer-anchor-icon(gmail-64x64);
-	}
-	a[title="Reddit"] {
-		@include footer-anchor-icon(reddit-64x64);
-	}
-	a[title="YouTube"] {
-		@include footer-anchor-icon(youtube-64x64);
-	}
-	a[title="MySpace"] {
-		@include footer-anchor-icon(myspace-64x64);
+	font-size:.7rem;
+	color: lighten($bgcolor,10%);
+	
+	div { 
+		float: right;
 	}
 	
+
+	
+	$siteList: (Facebook SoundCloud GitHub LinkedIn Gmail Reddit YouTube MySpace);
+	$siteSelector: "";
+	@each $site in $siteList {
+		@if $siteSelector != "" {
+			$siteSelector: $siteSelector + ", ";
+		}
+		$siteSelector: $siteSelector + "a[title=\"#{$site}\"]";
+		a[title="#{$site}"] {
+			@include footer-anchor-icon($site);
+		}
+	}
+	#{$siteSelector} {
+		@include border-radius(50%);
+		background-image: sprite-url($social-sprites);
+		background-size: 32px auto;
+		display: inline-block;
+		-webkit-text-size-adjust: none;
+		overflow: hidden;
+		line-height:1000px;
+		font-size: 0;
+		height:32px;
+		width:32px;
+		@include box-shadow(3px 3px 3px rgba(0,0,0,0.3));
+		&:hover {
+			@include box-shadow(0px 0px 3px 3px rgba($selcolor,0.7));
+		}
+		&:active {
+			@include box-shadow(0px 0px 3px 3px rgba($activecolor,0.5));
+		}
+	}
 }
 
 // This stuff is for swipe.js
@@ -316,26 +324,66 @@ footer {
 #controls {
 	overflow: hidden;
 	font-weight: bold;
-	font-size: 1.0rem;
+	font-size: 0.75rem;
 	text-decoration: underline;
-	> span {
+	> div {
+		min-width: 150px;
+		display: inline-block;
 		cursor: pointer;
+		border: 1px solid black;
+		line-height:42px;
+		text-align: center;
+		@include background(linear-gradient(darken($selcolor,2%),lighten($bgcolor,5%)));
+		&:hover {
+			@include background(linear-gradient($selcolor,lighten($bgcolor,7%)));
+		}
+		&:active {
+			@include background(linear-gradient(lighten($bgcolor,5%),darken($selcolor,2%)));
+			color: #eef; 
+		}
+		&:hover:active {
+			@include background(linear-gradient(lighten($bgcolor,7%),$selcolor));
+		}
+		@include border-radius(10px);
+		@include user-select(none);
 	}
 	padding: 5px 0;
 	
 }
 
+#album_name {
+	padding-left: 10px;
+	float: left;
+	line-height: 42px;
+	font-size: 1.0rem;
+	&:before {
+		content: "NOW PLAYING: ";
+	}
+}
+
 #prev_album {
 	float: left;
 	body.first_album & {
-		display: none;
+		@include background(linear-gradient(darken($bgcolor,2%),$bgcolor));
+		cursor: default;
+		
 	}
 }
 #next_album {
 	float: right;
 	body.last_album & {
-		display: none;
+		@include background(linear-gradient(darken($bgcolor,2%),$bgcolor));
+		cursor: default;
 	}
+}
+
+#cc_license {
+	width: 80px;
+	margin-left:auto;
+}
+
+#fb_like {
+	float: right;
 }
 
 
@@ -347,4 +395,3 @@ h1,h2,h3,h4,h5,h6 {
 		font-size: 1.6em - (0.25 * $index);
 	}
 }
-
