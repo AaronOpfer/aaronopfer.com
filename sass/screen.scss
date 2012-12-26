@@ -39,7 +39,7 @@ body {
 	margin: auto;
 	color: white;
 	
-	@include background(linear-gradient($bgcolor-gradient,$bgcolor),url('../images/test_bg.png'),$bgcolor);
+	@include background(linear-gradient($bgcolor-gradient,$bgcolor),inline-image('../images/test_bg.png'),$bgcolor);
 	
 	background-size: 100% 128px, auto;
 	background-repeat: no-repeat,repeat;
@@ -75,6 +75,14 @@ header {
 	@media (min-width: 420px) {
 		height: 68px;
 	}
+	
+	a {
+		color: white !important;
+		text-decoration: none !important;
+		@media print {
+			color: black !important;
+		}
+	}
 
 	
 	h1 {
@@ -92,7 +100,7 @@ header {
 		height: 100%;
 		
 		
-		span {
+		a {
 			display: table-cell;
 			vertical-align: middle;
 			height: 50px; // sets "minimum height" because tables.
@@ -118,7 +126,7 @@ header {
 		}
 		
 		
-		li {
+		a {
 			@include user-select(none);
 			margin-right:1px;
 			display: table-cell;
@@ -156,7 +164,7 @@ header {
 			}
 			
 			&:hover {
-				color: $selcolor;
+				color: $selcolor !important;
 				background: darken($bgcolor,4%);
 			}
 		}
@@ -167,7 +175,8 @@ content {
 	display: block;
 	margin: 5px 0;
 	
-	background: darken($bgcolor,5%);
+	@include background(linear-gradient(top,darken($bgcolor,6%),darken($bgcolor,3%) 6%, darken($bgcolor,5%) 8%, darken($bgcolor,1%) ));
+	//background: darken($bgcolor,5%);
 	border: solid 1px darken($bgcolor,2%);
 	@include box-shadow(0 0 10px darken($bgcolor,6%),0 0 10px darken($bgcolor,6%) inset);
 	@include border-radius(10px);
@@ -211,6 +220,8 @@ content {
 #gravatar {
 	float: right;
 	margin:10px;
+	width: 128px;
+	height: 128px;
 	@include border-radius(5px);
 }
 

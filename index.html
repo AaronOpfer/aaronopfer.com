@@ -21,28 +21,34 @@
 
 	<body>
 		<header>
-			<h1><span>AARON OPFER</span></h1>
+			<h1><a href="" title="Aaron Opfer">AARON OPFER</a></h1>
 			<ul>
-				<li>HOME</li>
-				<li>CAREER</li>
-				<li id="music_btn">MUSIC</li>
+				<a href="" title="Home">HOME</a>
+				<a href="career" title="Career">CAREER</a>
+				<a href="music" title="Music" id="music_btn">MUSIC</a>
 			</ul>
 		</header>
 		
 		<content>
-			<div class='swipe-wrap'>
+			<div class='swipe-wrap' id="swipe-wrap">
 				<article>
-					<img id=gravatar src="https://secure.gravatar.com/avatar/63f6aa22eee34930753969832d205da1?s=128" alt="Aaron Opfer">
+					<img id=gravatar src="https://secure.gravatar.com/avatar/63f6aa22eee34930753969832d205da1?s=256" alt="Aaron Opfer">
 					<p>
 						Aaron Opfer is pretty great.<sup class=asterisk>*</sup>
 					</p>
 					
 					
-					<p>He lives in the Pittsburgh area. He is a software developer by trade, indie musician by night and avid fan of the color orange. He loves Linux, FOSS and the EFF,
-					and begs for forgiveness to the unix gods for using Windows at home. He codes while listening to the same 32 bars of music loop for hours. He enjoys video games.
+					<p>
+						He lives in the Pittsburgh area. He is a software developer by trade, indie musician by night. He codes while listening to the same 32 bars of music loop for hours.
 					</p>
 					
-					<p>This is his domain.</p>
+					<p>
+						He's been making software and music since freshman year of high school.
+					</p>
+					
+					<p>
+						This is his domain.
+					</p>
 					
 					<p>This may or may not have been autobiographical.</p>
 					
@@ -56,14 +62,14 @@
 					<ul>
 						<li>Javascript/jQuery
 						<li>HTML5/CSS3
-						<li>SASS&Compass
+						<li>SASS &amp; Compass
 						<li>Node.js
 						<li>Tornado
 						<li>PHP
 						<li>C/C++
 						<li>MySQL
 						<li>MongoDB
-						<li>Socket&Network Programming
+						<li>Socket &amp; Network Programming
 						<li>Python
 						<li>bash
 						<li>Reverse-Engineering (binaries, websites, etc)
@@ -93,7 +99,7 @@
 					
 				</article>
 				
-				<article>
+				<article id="music_tab">
 					<div id="controls">
 						<span id="prev_album">&lt;PREVIOUS ALBUM</span>
 						<span id="next_album">NEXT ALBUM &gt;</span>
@@ -114,7 +120,7 @@
 			<a title="Email" href="mailto:me@aaronopfer.com">Email</a>
 		</footer>
 		
-		<script src="js/swipe.js"></script>
-		<script src="js/ao.js"></script>
+		<script src="js/swipe.js" defer></script>
+		<script src="js/ao.js" defer></script>
 	</body>
 </html>

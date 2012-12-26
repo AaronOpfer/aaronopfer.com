@@ -1,9 +1,12 @@
 (function(){
 	'use strict';
 
-	var lis = document.querySelectorAll('header > ul > li')
+	var lis = document.querySelectorAll('header > ul > a')
 	, articles = document.querySelectorAll('content > div > article')
 	, pageName = window.location.href.match("/([a-z]+)$")
+	, swipeWrap = document.getElementById('swipe-wrap')
+	, musicTab = document.getElementById('music_tab')
+	, oldHeight = 0
 	, playerIframe = null
 	, i
 	, swipe
@@ -11,29 +14,34 @@
 	, albumEmbeds = [
 		{
 			name: "Bipolar",
-			uri: "https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Fplaylists%2F2688032&amp;color=30b0e8&amp;auto_play=false&amp;show_artwork=true"
+			uri: "2688032"
 		},
 		{
 			name: "Foot In The Door",
-			uri: "https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Fplaylists%2F2688050&amp;color=30b0e8&amp;auto_play=false&amp;show_artwork=true"
+			uri: "2688050"
+		},
+		{
+			name: "Oldies But Goodies",
+			uri: "3102627"
 		}
 	]
 	, musicPageInitialized = false
 	
 	, loadMusic = function(index) {
+		var url = "https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Fplaylists%2F" + albumEmbeds[index].uri + "&amp;color=30b0e8&amp;auto_play=false&amp;show_artwork=true";
+
 		if (playerIframe === null) {
 			playerIframe = document.createElement('iframe');
 			playerIframe.setAttribute('width','100%');
 			playerIframe.setAttribute('height','350');
 			playerIframe.setAttribute('scrolling','no');
-			playerIframe.setAttribute('frameborder','no');
-			playerIframe.src = albumEmbeds[index].uri;
+			playerIframe.src = url;
 			document.getElementById('soundcloud_player').appendChild(playerIframe);
 		} else {
 			//http://www.ozzu.com/programming-forum/ignoring-iframes-with-javascript-history-t67189.html
-			playerIframe.contentWindow.location.replace(albumEmbeds[index].uri);
+			playerIframe.contentWindow.location.replace(url);
 		}
-		
+		resizePlayer();
 		currentAlbum = index;
 		
 		if (index === 0) {
@@ -42,8 +50,13 @@
 		} else if (index === albumEmbeds.length-1) {
 			document.body.classList.add('last_album');
 			document.body.classList.remove('first_album');
+		} else {
+			document.body.classList.remove('last_album');
+			document.body.classList.remove('first_album');
 		}
 	}
+	
+	
 	
 	, initializeMusicPage = function () {
 		if (musicPageInitialized === true) {
@@ -59,6 +72,31 @@
 		
 		console.log(document.title);
 	}
+	
+	, resizePlayer = function (evt) {
+		if (playerIframe === null) {
+			return;
+		}
+		// we find the tallest tab that isn't the music tab (which we assume is the last tab)
+		var tallestHeight=0,tallest,element;
+		for (element = tallest = musicTab.previousSibling; element; element = element.previousSibling) {
+			if (element.scrollHeight > tallestHeight) {
+				tallestHeight = element.scrollHeight;
+				tallest = element;
+			}
+		}
+		
+		// ... and make the music player match its height
+		if (tallest.offsetHeight !== oldHeight) {
+			oldHeight = tallest.offsetHeight;
+			
+			var newHeight = tallest.offsetHeight - (musicTab.scrollHeight - playerIframe.scrollHeight);
+			playerIframe.style.height = newHeight + "px";
+		}
+	}
+	
+	// handles resizing the soundcloud window
+	window.addEventListener('resize',resizePlayer,false);
 
 	for (i = 0; i < lis.length; i++) {
 		(function (i){
@@ -66,6 +104,7 @@
 				if (e.which !== 1) {
 					return;
 				}
+				e.preventDefault();
 				swipe.slide(i,200);
 			},false);
 		}(i));
@@ -90,16 +129,7 @@
 	
 	
 	
-	if (pageName === "music") {
-		initializeMusicPage();
-	} else {
-		// Set up handlers to initialize music page when we predict the user 
-		// will go to them soon.
-		var music_btn = document.getElementById('music_btn');
-		
-		music_btn.addEventListener('mouseover',initializeMusicPage,false);
-		setTimeout(initializeMusicPage,15000);
-	}
+
 	
 	document.getElementById('prev_album').addEventListener('click', function (e) {
 		loadMusic(currentAlbum-1);
@@ -142,11 +172,22 @@
 			
 			if (typeof history.state !== "undefined") {
 				if (history.state === null || history.state.index !== index) {
-					history.pushState({index:index},false,url);
+					history.pushState({index:index},document.title,url);
 				}
 			}
 		}
 	});
+	
+	if (pageName === "music") {
+		initializeMusicPage();
+	} else {
+		// Set up handlers to initialize music page when we predict the user 
+		// will go to them soon.
+		var music_btn = document.getElementById('music_btn');
+		
+		music_btn.addEventListener('mouseover',initializeMusicPage,false);
+		setTimeout(initializeMusicPage,15000);
+	}
 	
 	window.addEventListener('popstate',function (e) {
 		if (e.state === null) {
