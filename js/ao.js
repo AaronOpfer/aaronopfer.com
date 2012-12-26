@@ -1,6 +1,6 @@
 (function(){
-
 	'use strict';
+
 	var lis = document.querySelectorAll('header > ul > li')
 	, articles = document.querySelectorAll('content > div > article')
 	, pageName = window.location.href.match("/([a-z]+)$")
@@ -42,8 +42,12 @@
 		
 		loadMusic(0);
 	}
+	
+	, setPageTitle = function (pageName) {
+		document.title = "Aaron Opfer - "+pageName[0].toUpperCase() + pageName.slice(1);
 		
-		
+		console.log(document.title);
+	}
 
 	for (i = 0; i < lis.length; i++) {
 		(function (i){
@@ -96,6 +100,7 @@
 	
 	lis[i].classList.add('selected');
 	articles[i].classList.add('selected');
+	setPageTitle(pageName);
 	
 	swipe = new Swipe(document.getElementsByTagName('content')[0],{
 		startSlide: i,
@@ -117,9 +122,13 @@
 				initializeMusicPage();
 			}
 			
+			setPageTitle(url);
+			
 			if (index == 0) {
 				url = window.location.href.match("^.+/")[0];
 			}
+			
+			
 			if (typeof history.state !== "undefined") {
 				if (history.state === null || history.state.index !== index) {
 					history.pushState({index:index},false,url);
