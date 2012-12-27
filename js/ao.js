@@ -104,6 +104,9 @@
 			oldHeight = tallest.offsetHeight;
 			
 			var newHeight = tallest.offsetHeight - (musicTab.scrollHeight - playerIframe.scrollHeight);
+			// the player must be at least 280px
+			newHeight = Math.max(newHeight,280);
+			
 			playerIframe.style.height = newHeight + "px";
 		}
 	}
