@@ -339,6 +339,13 @@ footer {
 		}
 	}
 }
+
+// music description text
+#music_description {
+	font-size: 0.8em;
+	line-height: 110%;
+}
+
 // music page controls
 #controls {
 	overflow: hidden;
@@ -346,7 +353,13 @@ footer {
 	font-size: 0.75rem;
 	text-decoration: underline;
 	> div {
-		min-width: 150px;
+		width: 50%;
+		max-width: 120px;
+		
+		@media (min-width: 420px) {
+			max-width: 150px;
+		}
+		
 		display: inline-block;
 		cursor: pointer;
 		border: 1px solid black;
@@ -354,14 +367,14 @@ footer {
 		text-align: center;
 		@include background(linear-gradient(darken($selcolor,2%),lighten($bgcolor,5%)));
 		&:hover {
-			@include background(linear-gradient($selcolor,lighten($bgcolor,7%)));
+			@include background(linear-gradient(lighten($selcolor,7%),lighten($bgcolor,14%)));
 		}
 		&:active {
 			@include background(linear-gradient(lighten($bgcolor,5%),darken($selcolor,2%)));
 			color: #eef; 
 		}
 		&:hover:active {
-			@include background(linear-gradient(lighten($bgcolor,7%),$selcolor));
+			@include background(linear-gradient(lighten($bgcolor,14%),lighten($selcolor,7%)));
 		}
 		@include border-radius(10px);
 		@include user-select(none);
@@ -371,12 +384,10 @@ footer {
 }
 
 #album_name {
-	padding-left: 10px;
-	float: left;
-	line-height: 42px;
-	font-size: 1.0rem;
+	font-size: 0.9rem;
+	font-weight: bold;
 	&:before {
-		content: "NOW PLAYING: ";
+		content: "ALBUM: ";
 	}
 }
 
@@ -402,7 +413,12 @@ footer {
 }
 
 #fb_like {
-	float: right;
+	width: 200px;
+	margin: auto;
+	@media (min-width: 420px) {
+		margin: 0;
+		float: right;
+	}
 }
 
 
