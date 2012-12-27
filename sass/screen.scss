@@ -205,6 +205,9 @@ content {
 		}
 		ul ul {
 			list-style: square;
+			li {
+				margin-left: 15px;
+			}
 		}
 	}
 	
@@ -324,6 +327,18 @@ footer {
 	}
 }
 
+// career columns
+
+.two_columns {
+	text-align: left;
+	@media (min-width: 420px) {
+		overflow: auto;
+		div {
+			float: left;
+			width: 50%;
+		}
+	}
+}
 // music page controls
 #controls {
 	overflow: hidden;
