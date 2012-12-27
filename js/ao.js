@@ -19,15 +19,15 @@
 	// data for embedding iframes
 	, albumEmbeds = [
 		{
-			name: "Bipolar",
+			name: "Bipolar (2009)",
 			uri: "2688032"
 		},
 		{
-			name: "Foot In The Door",
+			name: "Foot In The Door (2008)",
 			uri: "2688050"
 		},
 		{
-			name: "Oldies But Goodies",
+			name: "Oldies But Goodies (2007)",
 			uri: "3102627"
 		}
 	]
