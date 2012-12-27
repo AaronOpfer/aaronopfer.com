@@ -338,6 +338,32 @@ footer {
 	}
 }
 
+#github_blurb {
+	display: block;
+	margin: 30px 0;
+	text-align: center;
+	font-size: 0.7em;
+	
+	text-decoration: none;
+	color: white !important;
+	@media print {
+		color: black !important;
+	}
+	&:hover {
+		//text-decoration: underline;
+		img {
+			@include border-radius(50%);
+			@include box-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+		}
+	}
+
+	img {
+		width: 128px;
+		height: 128px;
+		
+	}
+}
+
 // music description text
 #music_description {
 	font-size: 0.8em;
