@@ -329,9 +329,9 @@ footer {
 // career columns
 
 .two_columns {
-	@media (min-width: 420px) {
+	@media (min-width: 720px) {
 		overflow: auto;
-		div {
+		> div {
 			float: left;
 			width: 50%;
 		}
