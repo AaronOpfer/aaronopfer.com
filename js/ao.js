@@ -1,7 +1,11 @@
 (function(){
 	'use strict';
+	
+	//------------------------------------------------------------------------
+	// GLOBAL VARS
+	//------------------------------------------------------------------------
 
-	var lis = document.querySelectorAll('header > ul > a')
+	var tabs = document.querySelectorAll('header > ul > a')
 	, articles = document.querySelectorAll('content > div > article')
 	, pageName = window.location.href.match("/([a-z]+)$")
 	, swipeWrap = document.getElementById('swipe-wrap')
@@ -9,8 +13,10 @@
 	, oldHeight = 0
 	, playerIframe = null
 	, i
+	, activeTab = null
 	, swipe
 	, currentAlbum
+	// data for embedding iframes
 	, albumEmbeds = [
 		{
 			name: "Bipolar",
@@ -26,6 +32,10 @@
 		}
 	]
 	, musicPageInitialized = false
+	
+	//------------------------------------------------------------------------
+	// FUNCTIONS
+	//------------------------------------------------------------------------
 	
 	, loadMusic = function(index) {
 		if (index < 0 || index >= albumEmbeds.length) {
@@ -111,12 +121,28 @@
 		}
 	}
 	
-	// handles resizing the soundcloud window
+	//------------------------------------------------------------------------
+	// INITIALIZATION
+	//------------------------------------------------------------------------
+	
+	// installs handler, handles resizing the soundcloud iframe
 	window.addEventListener('resize',resizePlayer,false);
+	
+	// fallback to home if we can't find the pagename
+	if (pageName === null) {
+		pageName = "home";
+	} else {
+		pageName = pageName[1];
+	}
 
-	for (i = 0; i < lis.length; i++) {
+	// install event listeners on the tabs
+	for (i = 0; i < tabs.length; i++) {
+		if (activeTab === null && tabs[i].innerHTML.toLowerCase() === pageName) {
+			activeTab = i;
+		}
+	
 		(function (i){
-			lis[i].addEventListener('click',function(e){
+			tabs[i].addEventListener('click',function(e){
 				if (e.which !== 1) {
 					return;
 				}
@@ -126,21 +152,9 @@
 		}(i));
 	}
 	
-	
-	if (pageName === null) {
-		pageName = "home";
-	} else {
-		pageName = pageName[1];
-	}
-	
-	for (i = 0; i < lis.length; i++) {
-		if (lis[i].innerHTML.toLowerCase() === pageName) {
-			break;
-		}
-	}
-	
-	if (i === lis.length) {
-		i = 0;
+	// default to the first tab
+	if (activeTab === null) {
+		activeTab = 0;
 	}
 	
 	document.getElementById('prev_album').addEventListener('click', function (e) {
@@ -158,19 +172,19 @@
 		swipe.slide(e.state.index,55);
 	},false);
 	
-	lis[i].classList.add('selected');
-	articles[i].classList.add('selected');
+	tabs[activeTab].classList.add('selected');
+	articles[activeTab].classList.add('selected');
 	setPageTitle(pageName);
 	
 	
 	swipe = new Swipe(document.getElementsByTagName('content')[0],{
-		startSlide: i,
+		startSlide: activeTab,
 		callback: function (index,ele) {
-			var li = lis[index]
+			var li = tabs[index]
 			, i;
 			
-			for (i = 0; i < lis.length; i++) {
-				lis[i].classList.remove('selected');
+			for (i = 0; i < tabs.length; i++) {
+				tabs[i].classList.remove('selected');
 				articles[i].classList.remove('selected');
 			}
 			
@@ -199,10 +213,10 @@
 	});
 	
 	if (pageName === "music") {
+		// music page is the active page, initialize right away
 		initializeMusicPage();
 	} else {
-		// Set up handlers to initialize music page when we predict the user 
-		// will go to them soon.
+		// Lazy load the music page
 		var music_btn = document.getElementById('music_btn');
 		
 		music_btn.addEventListener('mouseover',initializeMusicPage,false);
