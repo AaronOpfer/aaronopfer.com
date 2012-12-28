@@ -1,4 +1,4 @@
-(function(){
+(function(document,window,Swipe){
 	'use strict';
 	
 	//------------------------------------------------------------------------
@@ -36,6 +36,31 @@
 	//------------------------------------------------------------------------
 	// FUNCTIONS
 	//------------------------------------------------------------------------
+		
+	, resizePlayer = function (evt) {
+		if (playerIframe === null) {
+			return;
+		}
+		// we find the tallest tab that isn't the music tab (which we assume is the last tab)
+		var tallestHeight=0,newHeight,tallest,element;
+		for (element = tallest = musicTab.previousSibling; element; element = element.previousSibling) {
+			if (element.scrollHeight > tallestHeight) {
+				tallestHeight = element.scrollHeight;
+				tallest = element;
+			}
+		}
+		
+		// ... and make the music player match its height
+		if (tallest.offsetHeight !== oldHeight) {
+			oldHeight = tallest.offsetHeight;
+			
+			newHeight = tallest.offsetHeight - (musicTab.scrollHeight - playerIframe.scrollHeight);
+			// the player must be at least 280px
+			newHeight = Math.max(newHeight,280);
+			
+			playerIframe.style.height = newHeight + "px";
+		}
+	}
 	
 	, loadMusic = function(index) {
 		if (index < 0 || index >= albumEmbeds.length) {
@@ -55,7 +80,9 @@
 			// facebook javascript
 			(function(d, s, id) {
 				var js, fjs = d.getElementsByTagName(s)[0];
-				if (d.getElementById(id)) return;
+				if (d.getElementById(id)) {
+					return;
+				}
 				js = d.createElement(s); js.id = id;
 				js.async = true;
 				js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
@@ -96,30 +123,7 @@
 		document.title = "Aaron Opfer - "+pageName[0].toUpperCase() + pageName.slice(1);
 	}
 	
-	, resizePlayer = function (evt) {
-		if (playerIframe === null) {
-			return;
-		}
-		// we find the tallest tab that isn't the music tab (which we assume is the last tab)
-		var tallestHeight=0,tallest,element;
-		for (element = tallest = musicTab.previousSibling; element; element = element.previousSibling) {
-			if (element.scrollHeight > tallestHeight) {
-				tallestHeight = element.scrollHeight;
-				tallest = element;
-			}
-		}
-		
-		// ... and make the music player match its height
-		if (tallest.offsetHeight !== oldHeight) {
-			oldHeight = tallest.offsetHeight;
-			
-			var newHeight = tallest.offsetHeight - (musicTab.scrollHeight - playerIframe.scrollHeight);
-			// the player must be at least 280px
-			newHeight = Math.max(newHeight,280);
-			
-			playerIframe.style.height = newHeight + "px";
-		}
-	}
+	;
 	
 	//------------------------------------------------------------------------
 	// INITIALIZATION
@@ -181,7 +185,8 @@
 		startSlide: activeTab,
 		callback: function (index,ele) {
 			var li = tabs[index]
-			, i;
+			, i
+			, url;
 			
 			for (i = 0; i < tabs.length; i++) {
 				tabs[i].classList.remove('selected');
@@ -191,7 +196,7 @@
 			li.classList.add('selected');
 			ele.classList.add('selected');
 			
-			var url = li.innerHTML.toLowerCase();
+			url = li.innerHTML.toLowerCase();
 			
 			if (url === "music") {
 				initializeMusicPage();
@@ -199,7 +204,7 @@
 			
 			setPageTitle(url);
 			
-			if (index == 0) {
+			if (index === 0) {
 				url = window.location.href.match("^.+/")[0];
 			}
 			
@@ -217,10 +222,8 @@
 		initializeMusicPage();
 	} else {
 		// Lazy load the music page
-		var music_btn = document.getElementById('music_btn');
-		
-		music_btn.addEventListener('mouseover',initializeMusicPage,false);
+		document.getElementById('music_btn').addEventListener('mouseover',initializeMusicPage,false);
 		setTimeout(initializeMusicPage,15000);
 	}
 	
-}());
+}(document,window,Swipe));
