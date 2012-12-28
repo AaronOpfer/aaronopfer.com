@@ -130,15 +130,19 @@ header {
 			height:50px; // sets "minimum height" because tables.
 			
 			@media print {
-				color: #999;
+				color: #999 !important;
+			}
+			
+			&.selected, &:focus {
+				@include box-shadow(0 0 10px darken($bgcolor,6%),0 0 10px darken($bgcolor,6%) inset);
+				outline: 0;
 			}
 			
 			&.selected {
-				@include box-shadow(0 0 10px darken($bgcolor,6%),0 0 10px darken($bgcolor,6%) inset);
 				background: darken($bgcolor,5%);
 				@media print {
 					background: auto;
-					color: black;
+					color: black !important;
 				}
 			}
 			
@@ -261,6 +265,7 @@ footer {
 		@include box-shadow(3px 3px 4px rgba(0,0,0,0.3));
 		&:hover,&:focus {
 			@include box-shadow(0px 0px 3px 3px rgba($selcolor,0.8));
+			outline: 0;
 		}
 		&:active {
 			@include box-shadow(0px 0px 0px 2px rgba($selcolor,0.8));
