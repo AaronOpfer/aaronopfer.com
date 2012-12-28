@@ -42,9 +42,10 @@ body {
 	margin: auto;
 	color: white;
 	
-	@include background(linear-gradient($bgcolor-gradient,$bgcolor),inline-image('../images/test_bg.png'),$bgcolor);
 	
-	background-size: 100% 128px, auto;
+	@include background(linear-gradient(rgba(lighten($bgcolor-gradient,20%),0.5),rgba($bgcolor,0)),inline-image('../images/test_bg.png'),$bgcolor);
+	
+	background-size: 100% 256px, auto;
 	background-repeat: no-repeat,repeat;
 	background-position: top left;
 	
@@ -66,18 +67,9 @@ hr {
 }
 
 header {
-	@include border-radius(10px);
-
 	margin-top: 20px;
-	border-top: 4px solid darken($bgcolor,5%);
-	border-bottom: 4px solid darken($bgcolor,6%);
 	overflow: hidden;
 	font-weight: bold;
-	
-	@media print {
-		border: 1px solid black;
-		@include border-radius(10px);
-	}
 	
 	@media (min-width: 420px) {
 		height: 68px;
@@ -117,7 +109,9 @@ header {
 	ul {
 		width: 100%;
 		height: 100%;
-		
+		table-layout:fixed;
+		border-spacing: 10px;
+
 		@media (min-width: 420px) {
 			float:right;
 			width: 50%;
@@ -128,51 +122,31 @@ header {
 		overflow: hidden;
 		display: table;
 		
-		@media print {
-			padding: 5px;
-		}
-		
-		
-		a {
+		a {		
+			@include border-radius(10px);
 			@include user-select(none);
-			margin-right:1px;
 			display: table-cell;
 			vertical-align: middle;
 			height:50px; // sets "minimum height" because tables.
-			cursor: pointer;
-			@media (min-width: 420px) {
-				border-bottom: 3px solid darken($selcolor,18%);
-				border-top: 3px solid darken($selcolor,18%);
-			}
 			
-			@media (min-width: 640px) {
-				&:first-child {
-					border-left: 15px solid transparent;
-				}
-			}
-			
-			@media (min-width: 900px) {
-				&:last-child {
-					border-right: 15px solid transparent;
-				}
-			}
-			
-			@media print { 
-				border: none;
+			@media print {
+				color: #999;
 			}
 			
 			&.selected {
-				background: darken($bgcolor,2.5%);
+				@include box-shadow(0 0 10px darken($bgcolor,6%),0 0 10px darken($bgcolor,6%) inset);
+				background: darken($bgcolor,5%);
 				@media print {
 					background: auto;
-					border: 1px solid black;
-					@include border-radius(10px);
+					color: black;
 				}
 			}
 			
 			&:hover {
 				color: $selcolor !important;
-				background: darken($bgcolor,4%);
+				&:not(.selected) {
+					background: rgba(darken($bgcolor,5%),0.25);
+				}
 			}
 		}
 	}
