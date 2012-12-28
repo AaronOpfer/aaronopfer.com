@@ -135,6 +135,7 @@ header {
 			
 			&.selected, &:focus {
 				@include box-shadow(0 0 10px darken($bgcolor,6%),0 0 10px darken($bgcolor,6%) inset);
+				text-shadow: 0 0 1em rgba(255, 255, 255, 0.5);
 				outline: 0;
 			}
 			
@@ -191,17 +192,6 @@ content {
 	
 	p {
 		margin: 10px 0;
-	}
-	
-	
-	// for the front page objectivity joke.
-	.asterisk {
-		color: red;
-	}
-	
-	#disclaimer {
-		font-size: 0.7rem;
-		font-style: italic;
 	}
 }
 
