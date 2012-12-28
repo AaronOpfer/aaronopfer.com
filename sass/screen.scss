@@ -105,53 +105,53 @@ header {
 			height: 50px; // sets "minimum height" because tables.
 		}
 	}
-	
-	ul {
-		width: 100%;
-		height: 100%;
-		table-layout:fixed;
-		border-spacing: 10px;
+}
 
-		@media (min-width: 420px) {
-			float:right;
-			width: 50%;
+nav {
+	width: 100%;
+	height: 100%;
+	table-layout:fixed;
+	border-spacing: 10px;
+
+	@media (min-width: 420px) {
+		float:right;
+		width: 50%;
+	}
+	font-size: 1.0rem;
+	
+	text-align: center;
+	overflow: hidden;
+	display: table;
+	
+	a {		
+		@include border-radius(10px);
+		@include user-select(none);
+		display: table-cell;
+		vertical-align: middle;
+		height:50px; // sets "minimum height" because tables.
+		
+		@media print {
+			color: #999 !important;
 		}
-		font-size: 1.0rem;
 		
-		text-align: center;
-		overflow: hidden;
-		display: table;
+		&.selected, &:focus {
+			@include box-shadow(0 0 10px darken($bgcolor,6%),0 0 10px darken($bgcolor,6%) inset);
+			text-shadow: 0 0 1em rgba(255, 255, 255, 0.5);
+			outline: 0;
+		}
 		
-		a {		
-			@include border-radius(10px);
-			@include user-select(none);
-			display: table-cell;
-			vertical-align: middle;
-			height:50px; // sets "minimum height" because tables.
-			
+		&.selected {
+			background: darken($bgcolor,5%);
 			@media print {
-				color: #999 !important;
+				background: auto;
+				color: black !important;
 			}
-			
-			&.selected, &:focus {
-				@include box-shadow(0 0 10px darken($bgcolor,6%),0 0 10px darken($bgcolor,6%) inset);
-				text-shadow: 0 0 1em rgba(255, 255, 255, 0.5);
-				outline: 0;
-			}
-			
-			&.selected {
-				background: darken($bgcolor,5%);
-				@media print {
-					background: auto;
-					color: black !important;
-				}
-			}
-			
-			&:hover {
-				color: $selcolor !important;
-				&:not(.selected) {
-					background: rgba(darken($bgcolor,5%),0.25);
-				}
+		}
+		
+		&:hover {
+			color: $selcolor !important;
+			&:not(.selected) {
+				background: rgba(darken($bgcolor,5%),0.25);
 			}
 		}
 	}

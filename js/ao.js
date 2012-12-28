@@ -5,7 +5,7 @@
 	// GLOBAL VARS
 	//------------------------------------------------------------------------
 
-	var tabs = document.querySelectorAll('header > ul > a')
+	var tabs = document.querySelectorAll('nav > a')
 	, articles = document.querySelectorAll('content > div > article')
 	, pageName = window.location.href.match("/([a-z]+)$")
 	, swipeWrap = document.getElementById('swipe-wrap')
