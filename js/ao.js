@@ -5,8 +5,9 @@
 	// GLOBAL VARS
 	//------------------------------------------------------------------------
 
-	var tabs = document.querySelectorAll('nav > a')
-	, articles = document.querySelectorAll('content > div > article')
+	var nav = document.querySelector('nav')
+	, tabs = nav.querySelectorAll('a')
+	, articles = document.querySelectorAll('article')
 	, pageName = window.location.href.match("/([a-z]+)$")
 	, swipeWrap = document.getElementById('swipe-wrap')
 	, musicTab = document.getElementById('music_tab')
@@ -123,14 +124,34 @@
 		document.title = "Aaron Opfer - "+pageName[0].toUpperCase() + pageName.slice(1);
 	}
 	
+	, tabClickHandler = function (e) {
+		if (e.which !== 1) {
+			return;
+		}
+		
+		var index = Array.prototype.indexOf.call(tabs,e.target);
+		
+		if (index < 0) {
+			return;
+		}
+		
+		e.preventDefault();
+		if (swipe) {
+			swipe.slide(index,200);
+		}
+	}
+	
 	;
 	
 	//------------------------------------------------------------------------
 	// INITIALIZATION
 	//------------------------------------------------------------------------
 	
-	// installs handler, handles resizing the soundcloud iframe
+	// handles resizing the soundcloud iframe
 	window.addEventListener('resize',resizePlayer,false);
+	
+	// handles clicks on the navbar
+	nav.addEventListener('click',tabClickHandler,false);
 	
 	// fallback to home if we can't find the pagename
 	if (pageName === null) {
@@ -139,21 +160,11 @@
 		pageName = pageName[1];
 	}
 
-	// install event listeners on the tabs
+	// figure out which tab is active
 	for (i = 0; i < tabs.length; i++) {
 		if (activeTab === null && tabs[i].innerHTML.toLowerCase() === pageName) {
 			activeTab = i;
 		}
-	
-		(function (i){
-			tabs[i].addEventListener('click',function(e){
-				if (e.which !== 1) {
-					return;
-				}
-				e.preventDefault();
-				swipe.slide(i,200);
-			},false);
-		}(i));
 	}
 	
 	// default to the first tab
@@ -222,7 +233,7 @@
 		initializeMusicPage();
 	} else {
 		// Lazy load the music page
-		document.getElementById('music_btn').addEventListener('mouseover',initializeMusicPage,false);
+		nav.querySelector('[href=music]').addEventListener('mouseover',initializeMusicPage,false);
 		setTimeout(initializeMusicPage,15000);
 	}
 	
