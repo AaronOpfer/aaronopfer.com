@@ -141,6 +141,18 @@
 		}
 	}
 	
+	, choosyHandler = function (e) {
+		if (e.which !== 1) {
+			return;
+		}
+		
+		var index = parseInt(e.target.getAttribute('data-index'));
+		
+		e.preventDefault();
+		if (swipe) {
+			swipe.slide(index,200);
+		}
+	}
 	;
 	
 	//------------------------------------------------------------------------
@@ -152,6 +164,8 @@
 	
 	// handles clicks on the navbar
 	nav.addEventListener('click',tabClickHandler,false);
+	
+	document.getElementById('choosy').addEventListener('click',choosyHandler,false);
 	
 	// fallback to home if we can't find the pagename
 	if (pageName === null) {
