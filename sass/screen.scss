@@ -375,6 +375,10 @@ footer {
 	text-align: justify;
 }
 
+#soundcloud_player {
+	min-height: 280px;
+}
+
 // music page controls
 #controls {
 	overflow: hidden;
@@ -443,6 +447,7 @@ footer {
 
 #fb_like {
 	width: 200px;
+	min-height:62px;
 	margin: auto;
 	@media (min-width: 480px) {
 		margin: 0;
