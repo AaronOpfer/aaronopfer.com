@@ -8,13 +8,11 @@
 	var nav = document.querySelector('nav')
 	, tabs = nav.querySelectorAll('a')
 	, articles = document.querySelectorAll('article')
-	, pageName = window.location.href.match("/([a-z]+)$")
 	, swipeWrap = document.getElementById('swipe-wrap')
 	, musicTab = document.getElementById('music_tab')
+	, musicLinks = null
 	, oldHeight = 0
 	, playerIframe = null
-	, i
-	, activeTab = null
 	, swipe
 	, currentAlbum
 	// data for embedding iframes
@@ -73,7 +71,7 @@
 		if (playerIframe === null) {
 			playerIframe = document.createElement('iframe');
 			playerIframe.setAttribute('width','100%');
-			playerIframe.setAttribute('height','350');
+			playerIframe.setAttribute('height','280');
 			playerIframe.setAttribute('scrolling','no');
 			playerIframe.src = url;
 			document.getElementById('soundcloud_player').appendChild(playerIframe);
@@ -117,6 +115,13 @@
 		}
 		musicPageInitialized = true;
 		
+		if (musicLinks && document.removeEventListener) {
+			for (var i = 0; i < musicLinks.length; i++) {
+				musicLinks[i].removeEventListener('mouseover', initializeMusicPage, false);
+				musicLinks[i].removeEventListener('touchstart', initializeMusicPage, false);
+			}
+		}
+		
 		loadMusic(0);
 	}
 	
@@ -155,9 +160,104 @@
 	}
 	;
 	
+		
 	//------------------------------------------------------------------------
-	// INITIALIZATION
+	// PAGE INITIALIZATION
 	//------------------------------------------------------------------------
+	
+	(function(){
+		var pageName = window.location.href.match("/([a-z]+)$")
+		, activeTab = null
+		, i;
+	
+		// fallback to home if we can't find the pagename via regex
+		if (pageName === null) {
+			pageName = "home";
+			activeTab = 0;
+		} else {
+			pageName = pageName[1];
+			
+			// figure out which tab is active
+			for (i = 0; i < tabs.length; i++) {
+				if (tabs[i].innerHTML.toLowerCase() === pageName) {
+					activeTab = i;
+					break;
+				}
+			}
+			
+			// fallback to home if pagename isn't any of our pages
+			if (activeTab === null) {
+				activeTab = 0;
+				pageName = "home";
+			}
+		}
+		
+		tabs[activeTab].classList.add('selected');
+		articles[activeTab].classList.add('selected');
+		setPageTitle(pageName);
+		
+		
+		swipe = new Swipe(document.getElementsByTagName('content')[0],{
+			startSlide: activeTab,
+			callback: function (index,article) {
+				var tab = tabs[index]
+				, i
+				, url;
+				
+				for (i = 0; i < tabs.length; i++) {
+					tabs[i].classList.remove('selected');
+					articles[i].classList.remove('selected');
+				}
+				
+				tab.classList.add('selected');
+				article.classList.add('selected');
+				
+				url = tab.innerHTML.toLowerCase();
+				
+				if (url === "music") {
+					initializeMusicPage();
+				}
+				
+				setPageTitle(url);
+				
+				if (index === 0) {
+					url = window.location.href.match("^.+/")[0];
+				}
+				
+				
+				if (typeof history.state !== "undefined") {
+					if (history.state === null || history.state.index !== index) {
+						history.pushState({index:index},document.title,url);
+					}
+				}
+			}
+		});
+		
+		if (pageName === "music") {
+			// music page is the active page, initialize right away
+			initializeMusicPage();
+		} else {
+			// Lazy load the music page
+			musicLinks = document.querySelectorAll('[href=music]');
+			for (i = 0; i < musicLinks.length; i++) {
+				musicLinks[i].addEventListener('mouseover',initializeMusicPage,false);
+				musicLinks[i].addEventListener('touchstart',initializeMusicPage,false);
+			}
+			setTimeout(initializeMusicPage,15000);
+		}
+	}());
+	
+	//------------------------------------------------------------------------
+	// HANDLER INITIALIZATION
+	//------------------------------------------------------------------------
+	
+	// html5 history API handler
+	window.addEventListener('popstate',function (e) {
+		if (e.state === null) {
+			return;
+		}
+		swipe.slide(e.state.index,55);
+	},false);
 	
 	// handles resizing the soundcloud iframe
 	window.addEventListener('resize',resizePlayer,false);
@@ -165,27 +265,7 @@
 	// handles clicks on the navbar
 	nav.addEventListener('click',tabClickHandler,false);
 	
-	document.getElementById('choosy').addEventListener('click',choosyHandler,false);
-	
-	// fallback to home if we can't find the pagename
-	if (pageName === null) {
-		pageName = "home";
-	} else {
-		pageName = pageName[1];
-	}
-
-	// figure out which tab is active
-	for (i = 0; i < tabs.length; i++) {
-		if (activeTab === null && tabs[i].innerHTML.toLowerCase() === pageName) {
-			activeTab = i;
-		}
-	}
-	
-	// default to the first tab
-	if (activeTab === null) {
-		activeTab = 0;
-	}
-	
+	// Music next/prev buttons
 	document.getElementById('prev_album').addEventListener('click', function (e) {
 		loadMusic(currentAlbum-1);
 	}, false);
@@ -194,61 +274,8 @@
 		loadMusic(currentAlbum+1);
 	}, false);
 	
-	window.addEventListener('popstate',function (e) {
-		if (e.state === null) {
-			return;
-		}
-		swipe.slide(e.state.index,55);
-	},false);
-	
-	tabs[activeTab].classList.add('selected');
-	articles[activeTab].classList.add('selected');
-	setPageTitle(pageName);
-	
-	
-	swipe = new Swipe(document.getElementsByTagName('content')[0],{
-		startSlide: activeTab,
-		callback: function (index,ele) {
-			var li = tabs[index]
-			, i
-			, url;
-			
-			for (i = 0; i < tabs.length; i++) {
-				tabs[i].classList.remove('selected');
-				articles[i].classList.remove('selected');
-			}
-			
-			li.classList.add('selected');
-			ele.classList.add('selected');
-			
-			url = li.innerHTML.toLowerCase();
-			
-			if (url === "music") {
-				initializeMusicPage();
-			}
-			
-			setPageTitle(url);
-			
-			if (index === 0) {
-				url = window.location.href.match("^.+/")[0];
-			}
-			
-			
-			if (typeof history.state !== "undefined") {
-				if (history.state === null || history.state.index !== index) {
-					history.pushState({index:index},document.title,url);
-				}
-			}
-		}
-	});
-	
-	if (pageName === "music") {
-		// music page is the active page, initialize right away
-		initializeMusicPage();
-	} else {
-		// Lazy load the music page
-		nav.querySelector('[href=music]').addEventListener('mouseover',initializeMusicPage,false);
-		setTimeout(initializeMusicPage,15000);
-	}
+	// first page article links
+	document.getElementById('choosy').addEventListener('click',choosyHandler,false);
+
 	
 }(document,window,Swipe));
