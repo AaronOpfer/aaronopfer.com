@@ -7,6 +7,8 @@ To get running from nothing:
 
 1. `gem update --system`
 2. `gem install compass`
-3. `compass compile`
-4. `git submodule init`
-5. `git submodule update`
+3. `gem install closure-compiler`
+4. `compass compile`
+5. `git submodule init`
+6. `git submodule update`
+7. `ruby build.rb`

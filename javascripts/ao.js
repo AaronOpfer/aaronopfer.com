@@ -280,4 +280,4 @@
 	document.getElementById('choosy').addEventListener('click',choosyHandler,false);
 
 	
-}(document,window,Swipe));
+}(document,window,window.Swipe));
