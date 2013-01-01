@@ -36,7 +36,7 @@
 	// FUNCTIONS
 	//------------------------------------------------------------------------
 		
-	, resizePlayer = function (evt) {
+	, resizePlayer = function () {
 		if (playerIframe === null) {
 			return;
 		}
@@ -115,8 +115,10 @@
 		}
 		musicPageInitialized = true;
 		
+		var i;
+		
 		if (musicLinks && document.removeEventListener) {
-			for (var i = 0; i < musicLinks.length; i++) {
+			for (i = 0; i < musicLinks.length; i++) {
 				musicLinks[i].removeEventListener('mouseover', initializeMusicPage, false);
 				musicLinks[i].removeEventListener('touchstart', initializeMusicPage, false);
 			}
@@ -151,7 +153,7 @@
 			return;
 		}
 		
-		var index = parseInt(e.target.getAttribute('data-index'));
+		var index = parseInt(e.target.getAttribute('data-index'),10);
 		
 		e.preventDefault();
 		if (swipe) {
