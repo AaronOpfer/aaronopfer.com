@@ -13,7 +13,7 @@ def load_scripts_development(scripts)
 		crc = Zlib::crc32(File.read("javascripts/"+script)).to_s(36)
 		filename = "js/"+crc+"."+script
 		FileUtils.cp("javascripts/"+script,filename)
-		output += "<script src=\""+filename+"\" defer></script>"
+		output += "<script src=\""+filename+"\"></script>"
 	end
 	output
 end
@@ -38,7 +38,7 @@ def load_scripts_production(scripts)
 	else
 		puts "Skipping closure compilation."
 	end
-	"<script src=\""+filename+"\" defer></script>\n"
+	"<script src=\""+filename+"\"></script>\n"
 end
 
 def load_scripts(scripts)
