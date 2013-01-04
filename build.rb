@@ -46,7 +46,8 @@ def load_scripts_production(scripts)
 			if response.code != "200"
 				raise "POST returned #{response.code}"
 			end
-			output = JSON.parse(response.body)[:compiledCode]
+			json =  JSON.parse(response.body)
+			output = json['compiledCode']
 		else
 			puts "Using offline closure compiler."
 			closure = Closure::Compiler.new(:compilation_level => 'ADVANCED_OPTIMIZATIONS')
