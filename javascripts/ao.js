@@ -171,6 +171,10 @@
 		var pageName = window.location.href.match("/([a-z]+)$")
 		, activeTab = null
 		, i;
+
+		if (/mobile/i.test(navigator.userAgent) && document.body.scrollTop <= 1) {
+			window.scrollTo(0, 1);
+		}
 	
 		// fallback to home if we can't find the pagename via regex
 		if (pageName === null) {
