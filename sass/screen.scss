@@ -280,7 +280,7 @@ footer {
 			font-size: 0;
 			height:32px;
 			width:32px;
-			@include transition(box-shadow 100ms);
+			@include transition(box-shadow 50ms);
 			@include box-shadow(3px 3px 4px rgba(0,0,0,0.3));
 			&:hover,&:focus {
 				@include box-shadow(0px 0px 3px 3px rgba($selcolor,0.8));
