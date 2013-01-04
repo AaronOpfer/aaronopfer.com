@@ -15,6 +15,7 @@ relative_assets = true
 
 #--aaronopfer.com settings
 PRODUCTION = true
+USE_ONLINE_CLOSURE = true
 #--
 
 # To disable debugging comments that display the original location of your selectors. Uncomment:

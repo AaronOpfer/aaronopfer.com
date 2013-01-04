@@ -1,11 +1,15 @@
 require 'erb'
 require 'zlib'
 require 'rubygems'
-require 'closure-compiler'
 require 'config'
 require 'fileutils'
 require 'open3'
-
+if USE_ONLINE_CLOSURE == true
+	require 'net/http'
+	require 'json'
+else
+	require 'closure-compiler'
+end 
 
 def load_scripts_development(scripts)
 	output = ""
@@ -27,10 +31,27 @@ def load_scripts_production(scripts)
 	
 	# if the file already exists, skip compiling
 	if File.exists?(filename) === false
-		puts "Using closure compiler."
-		closure = Closure::Compiler.new(:compilation_level => 'ADVANCED_OPTIMIZATIONS')
-		output = closure.compile(output)
-		
+
+		if USE_ONLINE_CLOSURE == true
+			puts "Using online closure compiler."
+			uri = URI.parse("http://closure-compiler.appspot.com/compile")
+			response = Net::HTTP.post_form(uri,
+				"output_format" => "json",
+				"output_info" => "compiled_code",
+				"compilation_level" => "ADVANCED_OPTIMIZATIONS",
+				"warning_level" => "verbose",
+				"output_file_name" => "default.js",
+				"js_code" => output
+			)
+			if response.code != "200"
+				raise "POST returned #{response.code}"
+			end
+			output = JSON.parse(response.body)[:compiledCode]
+		else
+			puts "Using offline closure compiler."
+			closure = Closure::Compiler.new(:compilation_level => 'ADVANCED_OPTIMIZATIONS')
+			output = closure.compile(output)
+		end
 		
 		File.open(filename, "w+") do |f|
 			f.write(output)
