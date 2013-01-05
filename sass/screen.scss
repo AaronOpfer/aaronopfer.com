@@ -176,8 +176,10 @@ nav {
 
 #can_has_javascript {
 	display: block;
-	margin: 0 20px 6px 20px;
 	text-align: justify;
+	font-size: 1.1em;
+	color: lighten($bgcolor,25%);
+	margin: 10px;
 }
 
 content {
@@ -242,7 +244,7 @@ $social-sprites: sprite-map('social/*.png');
 
 footer {
 	margin: 14px 15px 0 15px;
-	height: 32px;
+	height: 34px; // this is bigger than the icons because the icons have drop shadows
 	line-height:32px;
 	
 	@media (min-width: 940px) {
@@ -299,13 +301,9 @@ footer {
 	}
 }
 
-// hide content if there is no javascript.
-.no-js  content {
-	display: none;
-}
 // This stuff is for swipe.js
 @media screen {
-	content {
+	.js content {
 		visibility: hidden;
 		position: relative;
 		overflow: hidden;
@@ -323,6 +321,17 @@ footer {
 		}
 	}
 }
+
+// and this stuff is for no-js.
+.no-js {
+	article {
+		display: none;
+		&.selected {
+			display: block;
+		}
+	}
+}
+
 
 @media print {
 	article {
@@ -389,6 +398,13 @@ footer {
 
 #soundcloud_player {
 	min-height: 280px;
+	text-align: center;
+	p {
+		margin: 20px 0;
+	}
+	h1 {
+		padding-top: 75px;
+	}
 }
 
 // music page controls
