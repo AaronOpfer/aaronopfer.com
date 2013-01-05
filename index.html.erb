@@ -5,9 +5,12 @@
 	Written by Aaron Opfer. Who else?
 -->
 <!-- }}} -->
-<html class="no-js">
+<!--[if lt IE 7]><html class="no-js ie6"><![endif]-->
+    <!--[if IE 7]><html class="no-js ie7"><![endif]-->
+    <!--[if IE 8]><html class="no-js ie8"><![endif]-->
+    <!--[if gt IE 8]><!--><html class="not-horrible no-js"><!--<![endif]-->
 	<head>
-		<script>document.documentElement.className="js";</script>
+		<script>document.documentElement.className=document.documentElement.className.replace(/no-js/,'js');</script>
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
 		<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
