@@ -28,9 +28,9 @@
 		<header>
 			<h1><a href="" title="Aaron Opfer">AARON OPFER</a></h1>
 			<nav>
-				<a href="" title="Home">HOME</a>
-				<a href="career" title="Career">CAREER</a>
-				<a href="music" title="Music">MUSIC</a>
+				<a href="" title="Home" <%= selected('home') %>>HOME</a>
+				<a href="career" title="Career" <%= selected('career') %>>CAREER</a>
+				<a href="music" title="Music" <%= selected('music') %>>MUSIC</a>
 			</nav>
 		</header>
 		
@@ -45,7 +45,7 @@
 		
 		<content>
 			<div class='swipe-wrap' id="swipe-wrap">
-				<article>
+				<article <%= selected('home') %>>
 					<img id="gravatar" src="https://secure.gravatar.com/avatar/63f6aa22eee34930753969832d205da1?s=256" alt="Aaron Opfer">
 					<p>
 						Software Developer. Indie Musician.
@@ -63,7 +63,7 @@
 					</ul>
 				</article>
 				
-				<article>
+				<article <%= selected('career') %>>
 					<div class="two_columns">
 						<div>
 							<h3>Software Developer Experience</h3>
@@ -116,7 +116,7 @@
 					</p>
 				</article>
 				
-				<article id="music_tab">
+				<article id="music_tab" <%= selected('music') %>>
 					<div id="music_description">
 						<div id="fb_like">
 							<div class="fb-like-box" data-href="http://www.facebook.com/aaronopfer" data-width="200" data-show-faces="false" data-colorscheme="dark" data-stream="false" data-header="true"></div>
@@ -155,6 +155,6 @@
 				<a title="Gmail" href="mailto:me@aaronopfer.com">me@aaronopfer.com</a>
 			</div>
 		</footer>
-		<%=load_scripts(["swipe.js","ao.js"]) %>
+		<%=script_includes %>
 	</body>
 </html>

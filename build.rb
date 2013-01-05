@@ -11,9 +11,12 @@ else
 	require 'closure-compiler'
 end 
 
-def load_scripts_development(scripts)
+$scripts = ["swipe.js","ao.js"]
+$pages = ["home","career","music"]
+
+def load_scripts_development()
 	output = ""
-	for script in scripts
+	for script in $scripts
 		crc = Zlib::crc32(File.read("javascripts/"+script)).to_s(36)
 		filename = "js/"+crc+"."+script
 		FileUtils.cp("javascripts/"+script,filename)
@@ -22,9 +25,9 @@ def load_scripts_development(scripts)
 	output
 end
 
-def load_scripts_production(scripts)
+def load_scripts_production()
 	output = ""
-	for script in scripts
+	for script in $scripts
 		output += File.read("javascripts/"+script)
 	end
 	filename = "js/" + Zlib::crc32(output).to_s(36) + ".js"
@@ -63,26 +66,52 @@ def load_scripts_production(scripts)
 	"<script src=\""+filename+"\"></script>\n"
 end
 
-def load_scripts(scripts)
+def load_scripts()
 	if PRODUCTION	== true
-		load_scripts_production(scripts)
+		load_scripts_production()
 	else
-		load_scripts_development(scripts)
+		load_scripts_development()
 	end
 end
 
-renderer = ERB.new(File.read("index.html.erb"))
-html = renderer.result()
+script_includes = load_scripts()
+template = File.read("index.html.erb")
 
-if PRODUCTION === true
-	Open3.popen3("java -jar htmlcompressor-1.5.3.jar") {|stdin, stdout, stderr|
-		stdin.write(html)
-		stdin.close
-		
-		html = stdout.read()
-	}
+$currentPage = nil
+
+def selected(pageName)
+	
+	if pageName === $currentPage
+		'class="selected"'
+	end
 end
 
-File.open("index.html", "w+") do |f| 
-	f.write(html)
+
+for page in $pages
+	$currentPage = page
+	
+	
+	renderer = ERB.new(template)
+	html = renderer.result()
+	
+	if PRODUCTION === true
+		Open3.popen3("java -jar htmlcompressor-1.5.3.jar") {|stdin, stdout, stderr|
+			stdin.write(html)
+			stdin.close
+			
+			html = stdout.read()
+		}
+	end
+	
+	if page == "home"
+		page = "index"
+	end
+
+	File.open(page+".html", "w+") do |f| 
+		f.write(html)
+	end
 end
+
+
+
+
