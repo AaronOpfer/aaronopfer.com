@@ -5,9 +5,9 @@
 	// GLOBAL VARS
 	//------------------------------------------------------------------------
 
-	var nav = document.querySelector('nav')
-	, tabs = nav.querySelectorAll('a')
-	, articles = document.querySelectorAll('article')
+	var nav = document.getElementsByTagName('nav')[0]
+	, tabs = nav.getElementsByTagName('a')
+	, articles = document.getElementsByTagName('article')
 	, swipeWrap = document.getElementById('swipe-wrap')
 	, musicTab = document.getElementById('music_tab')
 	, musicLinks = null
@@ -96,14 +96,11 @@
 		currentAlbum = index;
 		
 		if (index === 0) {
-			document.body.classList.remove('last_album');
-			document.body.classList.add('first_album');
+			document.body.className = 'first_album';
 		} else if (index === albumEmbeds.length-1) {
-			document.body.classList.add('last_album');
-			document.body.classList.remove('first_album');
+			document.body.className = 'last_album';
 		} else {
-			document.body.classList.remove('last_album');
-			document.body.classList.remove('first_album');
+			document.body.className = '';
 		}
 	}
 	
@@ -128,17 +125,18 @@
 	}
 	
 	, setPageTitle = function (pageName) {
-		document.title = "Aaron Opfer - "+pageName[0].toUpperCase() + pageName.slice(1);
+		document.title = "Aaron Opfer - "+pageName.slice(0,1).toUpperCase() + pageName.slice(1);
 	}
 	
 	, tabClickHandler = function (e) {
-		if (e.which !== 1) {
+		if (e.which && e.which !== 1) {
 			return;
 		}
 		
-		var index = Array.prototype.indexOf.call(tabs,e.target);
+		var index;
+		for (index = 0; tabs[index] !== e.target && index < tabs.length; index++);
 		
-		if (index < 0) {
+		if (index >= tabs.length) {
 			return;
 		}
 		
@@ -149,7 +147,7 @@
 	}
 	
 	, choosyHandler = function (e) {
-		if (e.which !== 1) {
+		if (e.which && e.which !== 1) {
 			return;
 		}
 		
@@ -198,12 +196,12 @@
 			}
 		}
 		
-		tabs[activeTab].classList.add('selected');
-		articles[activeTab].classList.add('selected');
+		tabs[activeTab].className = 'selected';
+		articles[activeTab].className = 'selected';
 		setPageTitle(pageName);
 		
 		
-		swipe = new Swipe(document.getElementsByTagName('content')[0],{
+		swipe = new Swipe(document.getElementById('content'),{
 			startSlide: activeTab,
 			callback: function (index,article) {
 				var tab = tabs[index]
@@ -211,12 +209,12 @@
 				, url;
 				
 				for (i = 0; i < tabs.length; i++) {
-					tabs[i].classList.remove('selected');
-					articles[i].classList.remove('selected');
+					tabs[i].className = '';
+					articles[i].className = '';
 				}
 				
-				tab.classList.add('selected');
-				article.classList.add('selected');
+				tab.className = 'selected';
+				article.className = 'selected';
 				
 				url = tab.innerHTML.toLowerCase();
 				
