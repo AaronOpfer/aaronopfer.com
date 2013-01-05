@@ -1,1 +1,1 @@
-../swipe/swipe.js
+../submodules/swipe/swipe.js
