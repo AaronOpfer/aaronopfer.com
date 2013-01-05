@@ -34,7 +34,7 @@ a {
 	}
 }
 
-body,content,article,#can_has_javascript {
+body,#content,article,#can_has_javascript {
 	max-width: 900px;
 	@media (min-width: 1300px) {
 		max-width: 1200px;
@@ -45,7 +45,7 @@ body {
 	margin: auto;
 	color: white;
 	
-	
+	background: $bgcolor;
 	@include background(linear-gradient(rgba(lighten($bgcolor-gradient,20%),0.5),rgba($bgcolor,0)),inline-image('../images/test_bg.png'),$bgcolor);
 	
 	background-size: 100% 256px, auto;
@@ -182,12 +182,13 @@ nav {
 	margin: 10px;
 }
 
-content {
+#content {
 	display: block;
 	margin: 5px 0;
 	
-	@include background(linear-gradient(top,darken($bgcolor,6%),darken($bgcolor,3%) 6%, darken($bgcolor,5%) 8%, darken($bgcolor,1%) ));
-	//background: darken($bgcolor,5%);
+	background: darken($bgcolor,5%);
+	@include background(linear-gradient(top,darken($bgcolor,6%),darken($bgcolor,3%) 6%, darken($bgcolor,5%) 8%, darken($bgcolor,1%) ),darken($bgcolor,5%));
+
 	border: solid 1px darken($bgcolor,2%);
 	@media (min-width: 480px) {
 		@include box-shadow(0 0 10px darken($bgcolor,6%),0 0 10px darken($bgcolor,6%) inset);
@@ -303,7 +304,7 @@ footer {
 
 // This stuff is for swipe.js
 @media screen {
-	.js content {
+	.js #content {
 		visibility: hidden;
 		position: relative;
 		overflow: hidden;
@@ -426,12 +427,12 @@ footer {
 		border: 1px solid black;
 		line-height:42px;
 		text-align: center;
-		@include background(linear-gradient(darken($selcolor,2%),lighten($bgcolor,5%)));
+		@include background(linear-gradient(darken($selcolor,2%),lighten($bgcolor,5%)),darken($selcolor,5%));
 		&:hover {
-			@include background(linear-gradient(lighten($selcolor,7%),lighten($bgcolor,14%)));
+			@include background(linear-gradient(lighten($selcolor,7%),lighten($bgcolor,14%)),$selcolor);
 		}
 		&:active {
-			@include background(linear-gradient(lighten($bgcolor,5%),darken($selcolor,2%)));
+			@include background(linear-gradient(lighten($bgcolor,5%),darken($selcolor,2%)),darken($selcolor,10%));
 			color: #eef; 
 		}
 		&:hover:active {
