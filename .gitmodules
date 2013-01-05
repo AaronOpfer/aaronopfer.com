@@ -1,3 +1,12 @@
 [submodule "swipe"]
 	path = submodules/swipe
 	url = git://github.com/AaronOpfer/Swipe.git
+[submodule "submodules/EventShim"]
+	path = submodules/EventShim
+	url = git://github.com/AaronOpfer/EventShim.git
+[submodule "submodules/Respond"]
+	path = submodules/Respond
+	url = git://github.com/scottjehl/Respond.git
+[submodule "submodules/html5shiv"]
+	path = submodules/html5shiv
+	url = git://github.com/aFarkas/html5shiv.git

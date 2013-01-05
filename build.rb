@@ -11,26 +11,33 @@ else
 	require 'closure-compiler'
 end 
 
-$scripts = ["swipe.js","ao.js"]
+scripts = ["javascripts/swipe.js","javascripts/ao.js"]
+ie_scripts = ["ie_javascripts/html5shiv.js","ie_javascripts/eventShim.js","ie_javascripts/respond.js"]
+
 $pages = ["home","career","music"]
 
-def load_scripts_development()
+def load_scripts_development(scripts,advanced)
 	output = ""
-	for script in $scripts
-		crc = Zlib::crc32(File.read("javascripts/"+script)).to_s(36)
-		filename = "js/"+crc+"."+script
-		FileUtils.cp("javascripts/"+script,filename)
+	for script in scripts
+		crc = Zlib::crc32(File.read(script)).to_s(36)
+		filename = "js/"+crc+"."+script.match(/[a-zA-Z0-9\.]+$/)[0]
+		FileUtils.cp(script,filename)
 		output += "<script src=\""+filename+"\"></script>"
 	end
 	output
 end
 
-def load_scripts_production()
+def load_scripts_production(scripts,advanced)
 	output = ""
-	for script in $scripts
-		output += File.read("javascripts/"+script)
+	for script in scripts
+		output += File.read(script)
 	end
 	filename = "js/" + Zlib::crc32(output).to_s(36) + ".js"
+	
+	optimizations = 'SIMPLE_OPTIMIZATIONS'
+	if advanced == true
+		optimizations = 'ADVANCED_OPTIMIZATIONS'
+	end
 	
 	# if the file already exists, skip compiling
 	if File.exists?(filename) === false
@@ -41,7 +48,7 @@ def load_scripts_production()
 			response = Net::HTTP.post_form(uri,
 				"output_format" => "json",
 				"output_info" => "compiled_code",
-				"compilation_level" => "ADVANCED_OPTIMIZATIONS",
+				"compilation_level" => optimizations,
 				"warning_level" => "verbose",
 				"output_file_name" => "default.js",
 				"js_code" => output
@@ -53,7 +60,7 @@ def load_scripts_production()
 			output = json['compiledCode']
 		else
 			puts "Using offline closure compiler."
-			closure = Closure::Compiler.new(:compilation_level => 'ADVANCED_OPTIMIZATIONS')
+			closure = Closure::Compiler.new(:compilation_level => optimizations)
 			output = closure.compile(output)
 		end
 		
@@ -66,15 +73,16 @@ def load_scripts_production()
 	"<script src=\""+filename+"\"></script>\n"
 end
 
-def load_scripts()
+def load_scripts(scripts,advanced)
 	if PRODUCTION	== true
-		load_scripts_production()
+		load_scripts_production(scripts,advanced)
 	else
-		load_scripts_development()
+		load_scripts_development(scripts,advanced)
 	end
 end
 
-script_includes = load_scripts()
+script_includes = load_scripts(scripts,true)
+ie_script_includes = load_scripts(ie_scripts,false)
 template = File.read("index.html.erb")
 
 $currentPage = nil
