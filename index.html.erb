@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <!-- {{{ -->
 <!--
-	aaronopfer.com
-	Written by Aaron Opfer. Who else?
+	You must be smart if you're reading this. Check out the site's code:
+	https://github.com/AaronOpfer/aaronopfer.com
 -->
 <!-- }}} -->
 <!--[if lt IE 7]><html class="no-js ie6"><![endif]-->
@@ -10,18 +10,38 @@
     <!--[if IE 8]><html class="no-js ie8"><![endif]-->
     <!--[if gt IE 8]><!--><html class="not-horrible no-js"><!--<![endif]-->
 	<head>
-		<script>document.documentElement.className=document.documentElement.className.replace(/no-js/,'js');</script>
-		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
 		<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+		<meta charset="UTF-8">
+
+		<meta name="copyright" content="Copyright Aaron Opfer 2013. Some Rights Reserved.">
+		<meta property="og:title" content="Aaron Opfer - <%=page.capitalize%>">
+		<meta property="og:image" content="https://secure.gravatar.com/avatar/63f6aa22eee34930753969832d205da1?s=256">
+		<meta property="og:image:width" content="256" />
+		<meta property="og:image:height" content="256" />
+		<meta property="og:site_name" content="Aaron Opfer">
+		<% if page == "music" %>
+		<meta property="og:type" content="musician">
+		<% else %>
+		<meta property="og:type" content="public_figure">
+		<% end %>
+		<meta name="author" content="Aaron Opfer">
+		<meta name="keywords" content="Aaron Opfer, Music, Programmer, Software, Developer, Software Developer">
+		<meta name="description" content="Software Developer, Indie Musician.">
+		<meta property="og:description" content="Software Developer, Indie Musician.">
+		<meta property="og:updated_time" content="<%=Time.now.to_i%>">
+		
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
 		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, target-densitydpi=medium-dpi">
+		
+		<script>document.documentElement.className=document.documentElement.className.replace(/no-js/,'js');</script>
 		<link href="stylesheets/screen.css" rel="stylesheet" type="text/css" />
 		<link rel="dns-prefetch" href="//w.soundcloud.com">
 		<link rel="dns-prefetch" href="//connect.facebook.net">
 		<!--[if lt IE 9]>
 			<%= ie_script_includes %>
 		<![endif]-->
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, target-densitydpi=medium-dpi">
+		
 		<link rel="shortcut icon" type="image/png" href="images/favicon.png">
 		<title>Aaron Opfer - <%=page.capitalize%></title>
 	</head>
@@ -141,7 +161,7 @@
 		</div>
 		
 		<footer>
-			&copy; Aaron Opfer 2012. Some Rights Reserved.
+			&copy; Aaron Opfer 2013. Some Rights Reserved.
 			<div>
 				<a title="Facebook" href="http://www.facebook.com/aaronopfer">Facebook</a>
 				<a title="MySpace" href="http://myspace.com/aaronopfer">MySpace</a>
