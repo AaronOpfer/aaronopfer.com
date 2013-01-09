@@ -1,3 +1,6 @@
+$legacy-support-for-ie6: false;
+$legacy-support-for-ie7: false;
+@import "compass/support";
 
 @import "compass/reset";
 @import "compass/css3/images";
@@ -46,11 +49,16 @@ body {
 	color: white;
 	
 	background: $bgcolor;
-	@include background(linear-gradient(rgba(lighten($bgcolor-gradient,20%),0.5),rgba($bgcolor,0)),inline-image('../images/test_bg.png'),$bgcolor);
+	@include background(
+		linear-gradient(rgba(lighten($bgcolor-gradient,20%),0.5),rgba($bgcolor,0)),
+		inline-image('../images/sines.png'),
+		inline-image('../images/bg.png'),
+		$bgcolor
+	);
 	
-	background-size: 100% 256px, auto;
-	background-repeat: no-repeat,repeat;
-	background-position: top left;
+	background-size: 100% 256px, 800px 190px, auto;
+	background-repeat: no-repeat, repeat-x, repeat;
+	background-position: top left, 0 20px;
 	
 	@media print {
 		color: black;
