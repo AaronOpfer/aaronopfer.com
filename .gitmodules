@@ -3,7 +3,7 @@
 	url = git://github.com/AaronOpfer/Swipe.git
 [submodule "submodules/EventShim"]
 	path = submodules/EventShim
-	url = git://github.com/AaronOpfer/EventShim.git
+	url = git://github.com/jwmcpeak/EventShim.git
 [submodule "submodules/Respond"]
 	path = submodules/Respond
 	url = git://github.com/scottjehl/Respond.git
