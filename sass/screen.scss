@@ -355,7 +355,8 @@ footer {
 // career columns
 
 .two_columns {
-	line-height: 120%;
+	font-size: 0.8em;
+	line-height: 140%;
 	> div {
 		padding: 20px 0;
 	}
@@ -363,7 +364,6 @@ footer {
 		margin: 10px;
 	}
 	@media (min-width: 720px) {
-		line-height: inherit;
 		overflow: auto;
 		> div {
 			padding: 10px;
@@ -377,7 +377,7 @@ footer {
 	display: block;
 	margin: 50px 0 30px 0;
 	text-align: center;
-	font-size: 0.7em;
+	font-size: 1em;
 	
 	text-decoration: none;
 	color: white !important;
