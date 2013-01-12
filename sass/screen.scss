@@ -159,7 +159,7 @@ nav {
 		}
 		
 		&.selected, &:focus {
-			@include box-shadow(0 0 10px darken($bgcolor,6%),0 0 10px darken($bgcolor,6%) inset);
+			@include box-shadow(0 0 10px darken($bgcolor,6%));
 			text-shadow: 0 0 1em rgba(255, 255, 255, 0.5);
 			outline: 0;
 		}
@@ -196,9 +196,9 @@ nav {
 	background: darken($bgcolor,5%);
 	@include background(linear-gradient(top,darken($bgcolor,6%),darken($bgcolor,3%) 6%, darken($bgcolor,5%) 8%, darken($bgcolor,1%) ),darken($bgcolor,5%));
 
-	border: solid 1px darken($bgcolor,2%);
+	border: solid 1px darken($bgcolor,6%);
 	@media (min-width: 480px) {
-		@include box-shadow(0 0 10px darken($bgcolor,6%),0 0 10px darken($bgcolor,6%) inset);
+		@include box-shadow(/*0 0 10px darken($bgcolor,6%),*/0 0 10px darken($bgcolor,6%) inset);
 		@include border-radius(10px);
 	}
 	min-height: 100px;
