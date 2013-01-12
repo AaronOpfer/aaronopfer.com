@@ -203,7 +203,7 @@
 		
 		swipe = new Swipe(document.getElementById('content'),{
 			startSlide: activeTab,
-			callback: function (index,article) {
+			transitionEnd: function (index,article) {
 				var tab = tabs[index]
 				, i
 				, url;
