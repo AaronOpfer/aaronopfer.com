@@ -346,9 +346,9 @@ footer {
 @media print {
 	article {
 		display: none;
-	}
-	article.selected {
-		display: block;
+		&.selected {
+			display: block;
+		}
 	}
 }
 
