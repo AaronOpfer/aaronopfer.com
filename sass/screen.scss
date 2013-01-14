@@ -179,8 +179,12 @@ nav {
 	border: solid 1px darken($bgcolor,6%);
 	@media (min-width: 480px) {
 		@include box-shadow(/*0 0 10px darken($bgcolor,6%),*/0 0 10px darken($bgcolor,6%) inset);
+	}
+	
+	@media (min-width: 890px) {
 		@include border-radius(10px);
 	}
+	
 	min-height: 100px;
 	
 	article {
