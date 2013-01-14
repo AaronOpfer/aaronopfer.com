@@ -297,21 +297,23 @@ footer {
 
 // This stuff is for swipe.js
 @media screen {
-	.js #content {
-		visibility: hidden;
-		position: relative;
-		overflow: hidden;
+	.js {
+		#content {
+			visibility: hidden;
+			position: relative;
+			overflow: hidden;
+		}
 		
-		> div {
+		#swipe-wrap {
 			overflow: hidden;
 			position: relative;
-			
-			article {
-				float: left;
-				width: 100%;
-				position: relative;
-				visibility: hidden;
-			}
+		}
+		
+		article {
+			float: left;
+			width: 100%;
+			position: relative;
+			visibility: hidden;
 		}
 	}
 }
