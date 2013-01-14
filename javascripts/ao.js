@@ -35,11 +35,32 @@
 	//------------------------------------------------------------------------
 	// FUNCTIONS
 	//------------------------------------------------------------------------
-		
-	, resizePlayer = function () {
-		if (playerIframe === null) {
-			return;
+	
+	, addClass = (function () {
+		if (document.body.classList) {
+			return function (dom,className) {
+				dom.classList.add(className);
+			};
+		} else {
+			return function (dom,className) {
+				dom.className += ' '+className+' ';
+			};
 		}
+	}())
+	
+	, rmClass = (function () {
+		if (document.body.classList) {
+			return function (dom,className) {
+				dom.classList.remove(className);
+			};
+		} else {
+			return function (dom,className) {
+				dom.className = dom.className.replace(className,'').trim();
+			};
+		}
+	}())
+	
+	, resizePlayer = function () {
 		// we find the tallest tab that isn't the music tab (which we assume is the last tab)
 		var tallestHeight=0,newHeight,tallest,element;
 		for (element = tallest = musicTab.previousSibling; element; element = element.previousSibling) {
@@ -69,6 +90,9 @@
 		var url = "https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Fplaylists%2F" + albumEmbeds[index].uri + "&amp;color=30b0e8&amp;auto_play=false&amp;show_artwork=true";
 
 		if (playerIframe === null) {
+			// handles resizing the soundcloud iframe
+			window.addEventListener('resize',resizePlayer,false);
+			// create iframe
 			playerIframe = document.createElement('iframe');
 			playerIframe.setAttribute('width','100%');
 			playerIframe.setAttribute('height','280');
@@ -96,11 +120,14 @@
 		currentAlbum = index;
 		
 		if (index === 0) {
-			document.body.className = 'first_album';
+			addClass(document.body,'first_album');
+			rmClass(document.body,'last_album');
 		} else if (index === albumEmbeds.length-1) {
-			document.body.className = 'last_album';
+			rmClass(document.body,'first_album');
+			addClass(document.body,'last_album');
 		} else {
-			document.body.className = '';
+			rmClass(document.body,'first_album');
+			rmClass(document.body,'last_album');
 		}
 	}
 	
@@ -195,28 +222,24 @@
 				pageName = "home";
 			}
 		}
-		
-		tabs[activeTab].className = 'selected';
-		articles[activeTab].className = 'selected';
+		addClass(tabs[activeTab],'selected');
+		addClass(articles[activeTab],'selected');
 		setPageTitle(pageName);
 		
 		
 		swipe = new Swipe(document.getElementById('content'),{
 			startSlide: activeTab,
 			transitionEnd: function (index,article) {
-				var tab = tabs[index]
-				, i
-				, url;
+				var i
+				, url = tabs[index].innerHTML.toLowerCase();
 				
-				for (i = 0; i < tabs.length; i++) {
-					tabs[i].className = '';
-					articles[i].className = '';
+				for (i = 0; i < articles.length; i++) {
+					if (article !== articles[i]) {
+						rmClass(articles[i], 'selected');
+					} else {
+						addClass(articles[i],'selected');
+					}
 				}
-				
-				tab.className = 'selected';
-				article.className = 'selected';
-				
-				url = tab.innerHTML.toLowerCase();
 				
 				if (url === "music") {
 					initializeMusicPage();
@@ -234,6 +257,20 @@
 						history.pushState({index:index},document.title,url);
 					}
 				}
+			},
+			callback: function (index,article) {
+				var tab = tabs[index]
+				, i;
+				
+				for (i = 0; i < tabs.length; i++) {
+					if (tab !== tabs[i]) {
+						rmClass(tabs[i],'selected');
+					} else {
+						addClass(tabs[i],'selected');
+					}
+				}
+				
+
 			}
 		});
 		
@@ -262,9 +299,6 @@
 		}
 		swipe.slide(e.state.index,55);
 	},false);
-	
-	// handles resizing the soundcloud iframe
-	window.addEventListener('resize',resizePlayer,false);
 	
 	// handles clicks on the navbar
 	nav.addEventListener('click',tabClickHandler,false);
