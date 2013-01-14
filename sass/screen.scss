@@ -37,7 +37,7 @@ a {
 	}
 }
 
-body,#content,article,#can_has_javascript {
+body,#content,article {
 	max-width: 900px;
 	@media (min-width: 1300px) {
 		max-width: 1200px;
