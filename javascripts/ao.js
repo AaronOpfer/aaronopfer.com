@@ -90,8 +90,6 @@
 		var url = "https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Fplaylists%2F" + albumEmbeds[index].uri + "&amp;color=30b0e8&amp;auto_play=false&amp;show_artwork=true";
 
 		if (playerIframe === null) {
-			// handles resizing the soundcloud iframe
-			window.addEventListener('resize',resizePlayer,false);
 			// create iframe
 			playerIframe = document.createElement('iframe');
 			playerIframe.setAttribute('width','100%');
@@ -99,6 +97,9 @@
 			playerIframe.setAttribute('scrolling','no');
 			playerIframe.src = url;
 			document.getElementById('soundcloud_player').appendChild(playerIframe);
+			
+			// handles resizing the soundcloud iframe
+			window.addEventListener('resize',resizePlayer,false);
 			
 			// facebook javascript
 			(function(d, s, id) {
