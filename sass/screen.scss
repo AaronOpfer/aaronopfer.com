@@ -212,18 +212,19 @@ article {
 	@media (min-width: 480px) {
 		line-height: 150%;
 	}
+}
+
 	
+li {
+	margin-left: 30px;
+}
+ul {
+	list-style: disc;
+}
+ul ul {
+	list-style: square;
 	li {
-		margin-left: 30px;
-	}
-	ul {
-		list-style: disc;
-	}
-	ul ul {
-		list-style: square;
-		li {
-			margin-left: 15px;
-		}
+		margin-left: 15px;
 	}
 }
 
