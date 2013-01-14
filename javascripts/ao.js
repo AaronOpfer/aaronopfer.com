@@ -55,7 +55,7 @@
 			};
 		} else {
 			return function (dom,className) {
-				dom.className = dom.className.replace(className,'').trim();
+				dom.className = dom.className.replace(className,'');
 			};
 		}
 	}())
