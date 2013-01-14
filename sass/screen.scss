@@ -187,34 +187,34 @@ nav {
 	
 	min-height: 100px;
 	
-	article {
-		line-height: 120%;
-		padding: 15px;
-		
-		@media (min-width: 480px) {
-			line-height: 150%;
-		}
-		
-		h1,h2,h3,h4,h5,h6 {
-			margin: 1px 0;
-		}
-		
-		li {
-			margin-left: 30px;
-		}
-		ul {
-			list-style: disc;
-		}
-		ul ul {
-			list-style: square;
-			li {
-				margin-left: 15px;
-			}
-		}
-	}
-	
 	p {
 		margin: 10px 0;
+	}
+}
+
+article {
+	line-height: 120%;
+	padding: 15px;
+	
+	@media (min-width: 480px) {
+		line-height: 150%;
+	}
+	
+	h1,h2,h3,h4,h5,h6 {
+		margin: 1px 0;
+	}
+	
+	li {
+		margin-left: 30px;
+	}
+	ul {
+		list-style: disc;
+	}
+	ul ul {
+		list-style: square;
+		li {
+			margin-left: 15px;
+		}
 	}
 }
 
