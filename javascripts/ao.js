@@ -203,39 +203,24 @@
 	//------------------------------------------------------------------------
 	
 	(function(){
-		var pageName = window.location.href.match("/([a-z]+)$")
-		, activeTab = null
-		, i;
+		var activeTab = null, i, selectedRegex = /selected/;
 
 		if (/mobile/i.test(navigator.userAgent) && document.body.scrollTop <= 1) {
 			window.scrollTo(0, 1);
 		}
 	
-		// fallback to home if we can't find the pagename via regex
-		if (pageName === null) {
-			pageName = "home";
-			activeTab = 0;
-		} else {
-			pageName = pageName[1];
-			
-			// figure out which tab is active
-			for (i = 0; i < tabs.length; i++) {
-				if (tabs[i].innerHTML.toLowerCase() === pageName) {
-					activeTab = i;
-					break;
-				}
-			}
-			
-			// fallback to home if pagename isn't any of our pages
-			if (activeTab === null) {
-				activeTab = 0;
-				pageName = "home";
+		// find which tab is selected
+		for (i = 0; i < tabs.length; i++) {
+			if (selectedRegex.exec(tabs[i].className) !== null) {
+				activeTab = i;
+				break;
 			}
 		}
-		addClass(tabs[activeTab],'selected');
-		addClass(articles[activeTab],'selected');
-		setPageTitle(pageName);
 		
+		// this should never happen.
+		if (activeTab === null) {
+			return;
+		}
 		
 		swipe = new Swipe(document.getElementById('content'),{
 			startSlide: activeTab,
@@ -284,7 +269,7 @@
 			}
 		});
 		
-		if (pageName === "music") {
+		if (tabs[activeTab].getAttribute('href') === "music") {
 			// music page is the active page, initialize right away
 			initializeMusicPage();
 		} else {
