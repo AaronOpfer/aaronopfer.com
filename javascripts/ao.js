@@ -173,19 +173,6 @@
 			swipe.slide(index,200);
 		}
 	}
-	
-	, choosyHandler = function (e) {
-		if (e.which && e.which !== 1) {
-			return;
-		}
-		
-		var index = parseInt(e.target.getAttribute('data-index'),10);
-		
-		e.preventDefault();
-		if (swipe) {
-			swipe.slide(index,200);
-		}
-	}
 	;
 	
 		
@@ -312,9 +299,6 @@
 	document.getElementById('next_album').addEventListener('click', function (e) {
 		loadMusic(currentAlbum+1);
 	}, false);
-	
-	// first page article links
-	document.getElementById('choosy').addEventListener('click',choosyHandler,false);
 
 	
 }(document,window,window.Swipe));

@@ -236,6 +236,44 @@ ul ul {
 	@include border-radius(5px);
 }
 
+#figure_container {
+	overflow: auto;
+	margin: 20px 0;
+	clear: both;
+}
+
+figure {
+	width: 277px;
+	margin: 0 auto;
+	
+	@media (min-width: 850px) {
+		float: left;
+		width: 33%;
+		display: inline-block;
+	}
+	
+	text-align: center;
+	img {
+		margin: 20px auto;
+		display: block;
+	}
+}
+
+#responsive_img {
+	width: 277px;
+	height: 82px;
+}
+
+#server_img {
+	width: 96px;
+	height: 82px;
+}
+
+#music_img {
+	width: 88px;
+	height: 82px;
+}
+
 $social-sprites: sprite-map('social/*.png');
 
 @mixin footer-anchor-icon($name) {
