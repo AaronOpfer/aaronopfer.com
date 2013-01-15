@@ -147,8 +147,8 @@
 		initializeFacebook();
 		
 		// remove event listeners, we don't need them anymore
-		window.removeEventHandler('mouseover', initHoverCheck, false);
-		window.removeEventHandler('touchstart', initHoverCheck, false);
+		window.removeEventListener('mouseover', initHoverCheck, false);
+		window.removeEventListener('touchstart', initHoverCheck, false);
 		initHoverCheck = null;
 		
 		loadMusic(0);
