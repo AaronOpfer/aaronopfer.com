@@ -81,6 +81,12 @@ def load_scripts(scripts,advanced)
 	end
 end
 
+def cachebust_uri(path)
+	crc = Zlib::crc32(File.read(path)).to_s(36)
+	matches = path.match(/(.+)(\.[^\/]+)/)
+	"\"" + matches[1] + "." + crc + matches[2] + "\""
+end
+
 script_includes = load_scripts(scripts,true)
 ie_script_includes = load_scripts(ie_scripts,false)
 template = File.read("index.html.erb")

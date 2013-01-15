@@ -35,7 +35,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, target-densitydpi=medium-dpi">
 		
 		<script>document.documentElement.className=document.documentElement.className.replace(/no-js/,'js');</script>
-		<link href="stylesheets/screen.css" rel="stylesheet" type="text/css" />
+		<link href=<%= cachebust_uri("stylesheets/screen.css") %> rel="stylesheet" type="text/css" />
 		<link rel="dns-prefetch" href="//w.soundcloud.com">
 		<link rel="dns-prefetch" href="//connect.facebook.net">
 		<!--[if lt IE 9]>
@@ -70,17 +70,17 @@
 							I make:
 						</p>
 						<figure>
-							<img id="server_img" src="images/server.png" alt="Application and network servers/daemons">
+							<img id="server_img" src=<%= cachebust_uri("images/server.png") %> alt="Application and network servers/daemons">
 							<figcaption>Application Servers</figcaption>
 						</figure>
 						
 						<figure>
-							<img id="responsive_img" src="images/responsive.png" alt="Websites that work on many devices">
+							<img id="responsive_img" src=<%= cachebust_uri("images/responsive.png")%> alt="Websites that work on many devices">
 							<figcaption>Responsive Websites/Webapps</figcaption>
 						</figure>
 						
 						<figure>
-							<img id="music_img" src="images/music.png" alt="EDM Music">
+							<img id="music_img" src=<%= cachebust_uri("images/music.png")%> alt="EDM Music">
 							<figcaption>EDM Music</figcaption>
 						</figure>
 					</div>
@@ -132,7 +132,7 @@
 							</ul>
 							<a id="github_blurb" href="https://github.com/AaronOpfer/aaronopfer.com" title="aaronopfer.com on GitHub">
 								<span>View this site's code on GitHub!</span><br>
-								<img alt="GitHub Icon" src="images/github.png">
+								<img alt="GitHub Icon" src=<%= cachebust_uri("images/github.png")%>>
 							</a>
 						</div>
 					</div>
@@ -166,7 +166,7 @@
 							<h1>:(<h1><p>You need JavaScript enabled to use this widget.</p>
 						</noscript>
 					</div>
-					<div id="cc_license" ><a title="This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 United States License." href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/"><img alt="Creative Commons Logo" src="images/by-nc-sa-3.0-us-80x15.png"></a></div>
+					<div id="cc_license"><a title="This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 United States License." href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/"><img alt="Creative Commons Logo" src=<%=cachebust_uri("images/by-nc-sa-30-us.png")%>></a></div>
 				</article>
 			</div>
 		</div>
