@@ -10,7 +10,6 @@
 	, articles = document.getElementsByTagName('article')
 	, swipeWrap = document.getElementById('swipe-wrap')
 	, musicTab = document.getElementById('music_tab')
-	, musicLinks = null
 	, oldHeight = 0
 	, playerIframe = null
 	, swipe
@@ -147,14 +146,10 @@
 		musicPageInitialized = true;
 		initializeFacebook();
 		
-		var i;
-		
-		if (musicLinks && document.removeEventListener) {
-			for (i = 0; i < musicLinks.length; i++) {
-				musicLinks[i].removeEventListener('mouseover', initializeMusicPage, false);
-				musicLinks[i].removeEventListener('touchstart', initializeMusicPage, false);
-			}
-		}
+		// remove event listeners, we don't need them anymore
+		window.removeEventHandler('mouseover', initHoverCheck, false);
+		window.removeEventHandler('touchstart', initHoverCheck, false);
+		initHoverCheck = null;
 		
 		loadMusic(0);
 	}
@@ -163,23 +158,43 @@
 		document.title = "Aaron Opfer - "+pageName.slice(0,1).toUpperCase() + pageName.slice(1);
 	}
 	
-	, tabClickHandler = function (e) {
-		if (e.which && e.which !== 1) {
+	, initHoverCheck = function (e) {
+		if (e.target.tagName !== "A" || e.target.getAttribute('href') !== "music") {
+			return;
+		}
+		initializeMusicPage();
+	}
+	
+	, anchorClickHandler = function (e) {
+		var url, index;
+		
+		if (e.target.tagName !== "A") {
 			return;
 		}
 		
-		var index;
-		for (index = 0; tabs[index] !== e.target && index < tabs.length; index++);
+		url = /^[a-z]+$/.exec(e.target.getAttribute('href'));
 		
+		if (url === null) {
+			return;
+		}
+		url = url[0];
+		
+		// figure out which tab this url matches up with, if any
+		for (index = 0; index < tabs.length; index++) {
+			if (e.target.getAttribute('href') === tabs[index].getAttribute('href')) {
+				break;
+			}
+		}
 		if (index >= tabs.length) {
 			return;
 		}
-		
+		// swipe to that tab
 		e.preventDefault();
 		if (swipe) {
 			swipe.slide(index,200);
 		}
 	}
+	
 	;
 	
 		
@@ -274,11 +289,8 @@
 			initializeMusicPage();
 		} else {
 			// Lazy load the music page
-			musicLinks = document.querySelectorAll('[href=music]');
-			for (i = 0; i < musicLinks.length; i++) {
-				musicLinks[i].addEventListener('mouseover',initializeMusicPage,false);
-				musicLinks[i].addEventListener('touchstart',initializeMusicPage,false);
-			}
+			window.addEventListener('mouseover',initHoverCheck,false);
+			window.addEventListener('touchstart',initHoverCheck,false);
 			setTimeout(initializeFacebook,15000);
 			setTimeout(initializeMusicPage,30000);
 		}
@@ -296,8 +308,8 @@
 		swipe.slide(e.state.index,55);
 	},false);
 	
-	// handles clicks on the navbar
-	nav.addEventListener('click',tabClickHandler,false);
+	// handles clicks to local links
+	window.addEventListener('click',anchorClickHandler,false);
 	
 	// Music next/prev buttons
 	document.getElementById('prev_album').addEventListener('click', function (e) {
