@@ -31,6 +31,7 @@
 		}
 	]
 	, musicPageInitialized = false
+	, facebookInitialized = false
 	
 	//------------------------------------------------------------------------
 	// FUNCTIONS
@@ -100,18 +101,6 @@
 			
 			// handles resizing the soundcloud iframe
 			window.addEventListener('resize',resizePlayer,false);
-			
-			// facebook javascript
-			(function(d, s, id) {
-				var js, fjs = d.getElementsByTagName(s)[0];
-				if (d.getElementById(id)) {
-					return;
-				}
-				js = d.createElement(s); js.id = id;
-				js.async = true;
-				js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
-				fjs.parentNode.insertBefore(js, fjs);
-			}(document, 'script', 'facebook-jssdk'));
 		} else {
 			//http://www.ozzu.com/programming-forum/ignoring-iframes-with-javascript-history-t67189.html
 			playerIframe.contentWindow.location.replace(url);
@@ -132,13 +121,31 @@
 		}
 	}
 	
-	
+	, initializeFacebook = function () {
+		if (facebookInitialized === true) {
+			return;
+		}
+		facebookInitialized = true;
+		
+		// facebook javascript
+		(function(d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) {
+				return;
+			}
+			js = d.createElement(s); js.id = id;
+			js.async = true;
+			js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+	}
 	
 	, initializeMusicPage = function () {
 		if (musicPageInitialized === true) {
 			return;
 		}
 		musicPageInitialized = true;
+		initializeFacebook();
 		
 		var i;
 		
@@ -272,7 +279,8 @@
 				musicLinks[i].addEventListener('mouseover',initializeMusicPage,false);
 				musicLinks[i].addEventListener('touchstart',initializeMusicPage,false);
 			}
-			setTimeout(initializeMusicPage,15000);
+			setTimeout(initializeFacebook,15000);
+			setTimeout(initializeMusicPage,30000);
 		}
 	}());
 	
