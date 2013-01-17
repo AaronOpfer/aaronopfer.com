@@ -84,6 +84,11 @@ hr {
 h2,h3,h4,h5,h6 {
 	font-weight: bold;
 	margin: 1px 0;
+	padding: 2px 4px;
+	background:darken($bgcolor,15%);
+	background:rgba(darken($bgcolor,15%),0.5);
+	@include background(linear-gradient(left,rgba(darken($bgcolor,15%),0.5),rgba(darken($bgcolor,15%),0.8)));
+	@include border-radius(3px);
 }
 @for $index from 2 through 6 {
 	h#{$index} {
@@ -226,9 +231,7 @@ li {
 	margin-left: 20px;
 	margin-bottom: 5px;
 }
-ul {
-	list-style: disc;
-}
+
 ul ul {
 	list-style: square;
 	li {
