@@ -19,7 +19,7 @@ http {
 			try_files $uri.html index.html;
 			
 		}
-		location ~ ^/images/social-[a-b0-9].png$ {
+		location ~ ^/images/social-[a-z0-9].png$ {
 			add_header Expires "Thu, 31 Dec 2037 23:55:55 GMT";
 			add_header Cache-Control "public, max-age=315360000";
 		}
