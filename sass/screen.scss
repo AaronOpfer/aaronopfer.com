@@ -180,6 +180,10 @@ nav {
 	font-size: 1.1em;
 	color: lighten($bgcolor,25%);
 	margin: 10px;
+	
+	@media print {
+		display: none;
+	}
 }
 
 #content {
@@ -450,7 +454,8 @@ footer {
 	p {
 		margin: 20px 0;
 	}
-	h1 {
+	strong {
+		display:block;
 		padding-top: 75px;
 	}
 }
