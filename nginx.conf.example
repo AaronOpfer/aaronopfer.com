@@ -15,11 +15,21 @@ http {
 		listen 127.0.0.1:80;
 		root /home/aaronopfer/webapps/aaronopfer/;
 
-		location  ~ ^/[^\.\/]+$ {
-			try_files $uri.html index.html;
-			
+		location = /index.html {
+			add_header Cache-Control "public, max-age=3600, must-revalidate";
 		}
-		location ~ ^/images/social-[a-z0-9].png$ {
+		
+		location  ~ ^/[^\.\/]+$ {
+			add_header Cache-Control "public, max-age=3600, must-revalidate";
+			try_files $uri.html index.html;
+		}
+		
+		location = /favicon.ico {
+			add_header Expires "Thu, 31 Dec 2037 23:55:55 GMT";
+			add_header Cache-Control "public, max-age=315360000";
+		}
+		
+		location ~ ^/images/social-[a-z0-9]+.png$ {
 			add_header Expires "Thu, 31 Dec 2037 23:55:55 GMT";
 			add_header Cache-Control "public, max-age=315360000";
 		}
