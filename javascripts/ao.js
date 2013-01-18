@@ -195,6 +195,67 @@
 		}
 	}
 	
+	, orangeifyStyle = function (cssText) {
+		var regexStyle1 = /\#([0-9a-zA-Z]{1,2})([0-9a-zA-Z]{1,2})([0-9a-zA-Z]{1,2})/g
+		, regexStyle2 = /rgba?\(\s*([0-9\.]+)\s*,\s*([0-9\.]+)\s*,\s*([0-9\.]+)\s*(,\s*([0-9\.]+)\s*)?\)/g
+		
+		, oldCssText = cssText;
+		
+		cssText = cssText.replace(regexStyle1, function (match,r,g,b) {
+			console.log('replaced #rrggbb');
+			return "#"+b+g+r;
+		});
+		
+		cssText = cssText.replace(regexStyle2, function (match,r,g,b,garbage,a) {
+			var rtn = "rgb";
+			if (a) {
+				rtn += "a";
+			}
+			rtn += "(" + (a ? [b,g,r,a] : [b,g,r]).join(', ') + ")";
+
+			if (a) {
+				console.log('replaced rgba ');
+			} else {
+				console.log('replaced rgb ');
+			}
+			return rtn;
+		});
+		
+		if (cssText != oldCssText) {
+			console.log('old css: '+oldCssText);
+			console.log('new css: '+cssText);
+		}
+		return cssText;
+	}
+	
+	, orangeify = function () {
+		var i,j,k,styleSheet, style,backgroundImage;
+		
+		for (i = 0; i < document.styleSheets.length; i++) {
+			styleSheet = document.styleSheets[i];
+			
+			if (styleSheet.href === null || !styleSheet.rules) {
+				continue;
+			}
+			for (j = 0; j < styleSheet.rules.length; j++) {
+				
+				if (styleSheet.rules[j].style) {
+					style = styleSheet.rules[j].style;
+					backgroundImage = style.backgroundImage;
+					style.cssText = orangeifyStyle(style.cssText);
+					if (backgroundImage && !style.backgroundImage) {
+						style.backgroundImage = orangeifyStyle(backgroundImage.replace(/, initial$/,''));
+					}
+				} else if (styleSheet.rules[j].cssRules) {
+					for (k = 0; k < styleSheet.rules[j].cssRules.length; k++) {
+						style = styleSheet.rules[j].cssRules[k].style;
+						style.cssText = orangeifyStyle(style.cssText);
+					}
+				}
+			}
+		}
+	}
+	
 	;
 	
 		
@@ -304,6 +365,8 @@
 	document.getElementById('next_album').addEventListener('click', function (e) {
 		loadMusic(currentAlbum+1);
 	}, false);
+	
+	document.getElementById('orange').addEventListener('click', orangeify);
 
 	
 }(document,window,window.Swipe));
