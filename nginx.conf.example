@@ -35,11 +35,7 @@ http {
 		}
 		
 		location ~ ^(/.+)(\.[a-z0-9]+)(\.[a-z0-9]+)$ {
-			try_files $1$3 $1$2$3;
-			add_header Expires "Thu, 31 Dec 2037 23:55:55 GMT";
-			add_header Cache-Control "public, max-age=315360000";
-		}
-		location /js/ {
+			try_files $1$3 $1$2$3 =404;
 			add_header Expires "Thu, 31 Dec 2037 23:55:55 GMT";
 			add_header Cache-Control "public, max-age=315360000";
 		}

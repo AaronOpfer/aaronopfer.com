@@ -16,13 +16,20 @@ ie_scripts = ["ie_javascripts/html5shiv.js","ie_javascripts/eventShim.js","ie_ja
 
 $pages = ["home","career","music"]
 
+
+def cachebust_uri(path)
+	crc = Zlib::crc32(File.read(path)).to_s(36)
+	matches = path.match(/(.+)(\.[^\/]+)/)
+	"\"" + matches[1] + "." + crc + matches[2] + "\""
+end
+
+
 def load_scripts_development(scripts,advanced)
 	output = ""
 	for script in scripts
-		crc = Zlib::crc32(File.read(script)).to_s(36)
-		filename = "js/"+crc+"."+script.match(/[a-zA-Z0-9\.]+$/)[0]
+		filename = "js/"+script.match(/[a-zA-Z0-9\.]+$/)[0]
 		FileUtils.cp(script,filename)
-		output += "<script src=\""+filename+"\"></script>"
+		output += "<script src="+cachebust_uri(filename)+"></script>"
 	end
 	output
 end
@@ -70,7 +77,7 @@ def load_scripts_production(scripts,advanced)
 	else
 		puts "Skipping closure compilation."
 	end
-	"<script src=\""+filename+"\"></script>\n"
+	"<script src="+cachebust_uri(filename)+"></script>\n"
 end
 
 def load_scripts(scripts,advanced)
@@ -81,11 +88,7 @@ def load_scripts(scripts,advanced)
 	end
 end
 
-def cachebust_uri(path)
-	crc = Zlib::crc32(File.read(path)).to_s(36)
-	matches = path.match(/(.+)(\.[^\/]+)/)
-	"\"" + matches[1] + "." + crc + matches[2] + "\""
-end
+
 
 script_includes = load_scripts(scripts,true)
 ie_script_includes = load_scripts(ie_scripts,false)
