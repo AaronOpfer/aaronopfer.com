@@ -52,7 +52,7 @@ body {
 	@include background(
 		linear-gradient(rgba(lighten($bgcolor-gradient,20%),0.5),rgba($bgcolor,0)),
 		inline-image('../images/sines.png'),
-		//inline-image('../images/bg.png'),
+		inline-image('../images/bg.png'),
 		$bgcolor
 	);
 	
