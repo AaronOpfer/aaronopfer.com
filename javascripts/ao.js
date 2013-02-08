@@ -202,7 +202,6 @@
 		, oldCssText = cssText;
 		
 		cssText = cssText.replace(regexStyle1, function (match,r,g,b) {
-			console.log('replaced #rrggbb');
 			return "#"+b+g+r;
 		});
 		
@@ -213,18 +212,9 @@
 			}
 			rtn += "(" + (a ? [b,g,r,a] : [b,g,r]).join(', ') + ")";
 
-			if (a) {
-				console.log('replaced rgba ');
-			} else {
-				console.log('replaced rgb ');
-			}
 			return rtn;
 		});
 		
-		if (cssText != oldCssText) {
-			console.log('old css: '+oldCssText);
-			console.log('new css: '+cssText);
-		}
 		return cssText;
 	}
 	
