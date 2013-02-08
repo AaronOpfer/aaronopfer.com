@@ -191,7 +191,7 @@
 		// swipe to that tab
 		e.preventDefault();
 		if (swipe) {
-			swipe.slide(index,200);
+			swipe.slide(index);
 		}
 	}
 	
@@ -341,7 +341,7 @@
 		if (e.state === null) {
 			return;
 		}
-		swipe.slide(e.state.index,55);
+		swipe.slide(e.state.index);
 	},false);
 	
 	// handles clicks to local links
