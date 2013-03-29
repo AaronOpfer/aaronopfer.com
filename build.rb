@@ -112,7 +112,7 @@ for page in $pages
 	html = renderer.result()
 	
 	if PRODUCTION === true
-		Open3.popen3("java -jar htmlcompressor-1.5.3.jar --remove-surrounding-spaces max --remove-quotes") {|stdin, stdout, stderr|
+		Open3.popen3("java -jar htmlcompressor-1.5.3.jar --remove-intertag-spaces --remove-surrounding-spaces max --remove-quotes") {|stdin, stdout, stderr|
 			stdin.write(html)
 			stdin.close
 			
