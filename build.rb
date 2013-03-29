@@ -1,7 +1,7 @@
 require 'erb'
 require 'zlib'
 require 'rubygems'
-require 'config'
+require 'config_build'
 require 'fileutils'
 require 'open3'
 if USE_ONLINE_CLOSURE == true

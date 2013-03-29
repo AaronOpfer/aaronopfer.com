@@ -13,10 +13,16 @@ output_style = :compressed
 # To enable relative paths to assets via compass helper functions. Uncomment:
 relative_assets = true
 
-#--aaronopfer.com settings
-PRODUCTION = true
-USE_ONLINE_CLOSURE = true
-#--
+# Cache buster
+asset_cache_buster do |path, real_path|
+  if File.exists?(real_path)
+	crc = Zlib::crc32(real_path.read).to_s(36)
+	pathname = Pathname.new(path)
+	new_path = "%s/%s.%s%s" % [pathname.dirname, pathname.basename(pathname.extname), crc, pathname.extname]
+
+    {:path => new_path, :query => nil}
+  end
+end
 
 # To disable debugging comments that display the original location of your selectors. Uncomment:
 # line_comments = false
