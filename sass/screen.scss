@@ -240,9 +240,26 @@ ul ul {
 	}
 }
 
+#gravatar_container {
+	float: right;
+	margin: 10px;
+	width: 128px;
+	height: 128px;
+	
+	// if the browser isn't horrible (< IE9) don't put the arrow on
+	// (we're too lazy to properly handle background-size's nonexistance)
+	.not-horrible & {
+		background: inline-image('../images/arrow.png') no-repeat;
+		background-position: bottom left;
+		background-size: 90px 60px;
+		width: 159px;
+		height: 162px;
+	}
+
+}
+
 #gravatar {
 	float: right;
-	margin:10px;
 	width: 128px;
 	height: 128px;
 	@include border-radius(5px);
