@@ -249,8 +249,7 @@ ul ul {
 	// if the browser isn't horrible (< IE9) don't put the arrow on
 	// (we're too lazy to properly handle background-size's nonexistance)
 	.not-horrible & {
-		background: inline-image('../images/arrow.png') no-repeat;
-		background-position: bottom left;
+		@include background(image_url('arrow.png') no-repeat left bottom);
 		background-size: 90px 60px;
 		width: 159px;
 		height: 162px;
