@@ -144,6 +144,7 @@ nav {
 		width: 17%;
 		min-width: 80px;
 		text-align: center;
+		margin-left: 3px;
 
 		line-height: 38px;
 		height: 38px;
@@ -216,7 +217,7 @@ nav {
 
 article {
 	line-height: 120%;
-	padding: 15px;
+	padding: 25px;
 	
 	@media (min-width: 480px) {
 		line-height: 150%;
@@ -242,7 +243,6 @@ ul ul {
 
 #gravatar_container {
 	float: right;
-	margin: 10px;
 	width: 128px;
 	height: 128px;
 	
@@ -352,8 +352,9 @@ footer {
 				height:32px;
 				width:32px;
 				margin-right: 1px;
-				@media (min-width: 480px) {
+				@media (min-width: 523px) {
 					margin-right: 0px;
+					margin-left: 2px;
 				}
 				@include transition(box-shadow 50ms);
 				@include box-shadow(3px 3px 4px rgba(0,0,0,0.3));
@@ -426,13 +427,10 @@ footer {
 	> div {
 		padding: 20px 0;
 	}
-	@media (min-width: 480px) {
-		margin: 10px;
-	}
 	@media (min-width: 720px) {
 		overflow: auto;
 		> div {
-			padding: 10px;
+			padding: 0 10px;
 			float: left;
 			width: 50%;
 		}
