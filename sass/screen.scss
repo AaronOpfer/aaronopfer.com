@@ -217,10 +217,11 @@ nav {
 
 article {
 	line-height: 120%;
-	padding: 25px;
+	padding: 20px;
 	
 	@media (min-width: 480px) {
 		line-height: 150%;
+		padding: 25px;
 	}
 }
 
