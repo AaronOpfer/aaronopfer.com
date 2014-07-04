@@ -17,6 +17,10 @@
 	// data for embedding iframes
 	, albumEmbeds = [
 		{
+			name: "Audacious (2014)",
+			uri: "42349508"
+		},
+		{
 			name: "Bipolar (2009)",
 			uri: "2688032"
 		},
