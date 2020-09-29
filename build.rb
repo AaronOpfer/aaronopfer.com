@@ -1,7 +1,7 @@
 require 'erb'
 require 'zlib'
 require 'rubygems'
-require 'config_build'
+require './config_build'
 require 'fileutils'
 require 'open3'
 if USE_ONLINE_CLOSURE == true
@@ -51,7 +51,7 @@ def load_scripts_production(scripts,advanced)
 
 		if USE_ONLINE_CLOSURE == true
 			puts "Using online closure compiler."
-			uri = URI.parse("http://closure-compiler.appspot.com/compile")
+			uri = URI.parse("https://closure-compiler.appspot.com/compile")
 			response = Net::HTTP.post_form(uri,
 				"output_format" => "json",
 				"output_info" => "compiled_code",

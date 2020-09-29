@@ -36,7 +36,6 @@
 		<script>document.documentElement.className=document.documentElement.className.replace(/no-js/,'js');</script>
 		<link href=<%= cachebust_uri("stylesheets/screen.css") %> rel="stylesheet" type="text/css" />
 		<link rel="dns-prefetch" href="//w.soundcloud.com">
-		<link rel="dns-prefetch" href="//connect.facebook.net">
 		<!--[if lt IE 9]>
 			<%= ie_script_includes %>
 		<![endif]-->
@@ -46,7 +45,6 @@
 	</head>
 
 	<body>
-		<div id="fb-root"></div><!-- facebook helper div -->
 		<header>
 			<h1><a href="" title="Aaron Opfer">AARON OPFER</a></h1>
 			<nav>
@@ -63,10 +61,10 @@
 						<img id="gravatar" src="//gravatar.com/avatar/63f6aa22eee34930753969832d205da1?s=256" alt="Aaron Opfer" title="Aaron Opfer">
 					</div>
 					<p>
-						I am Aaron Opfer. I'm from The Internet.
+						I am Aaron Opfer. I'm from The Internet. I live in Chicago.
 					</p>
 					<p>
-						I went to Bowling Green State University for three years before I left to find my happy place. I am now a software developer who loves what he does every day.
+						I am a software developer who mostly specializes in real-time messaging and microservices. I've mostly worked at trading companies for the last six years. I love what I do every day. I also make music (as a hobby).
 					</p>
 					<p>
 						I like: Creative Commons, FLOSS, EFF, outer space, Daft Punk and the color <span id="orange">orange</span>.
@@ -170,14 +168,6 @@
 				
 				<article id="music_tab" <%= selected('music') %>>
 					<div id="music_description">
-						<div id="fb_like">
-							<div class="fb-like-box" data-href="http://www.facebook.com/aaronopfer" data-width="200" data-show-faces="false" data-colorscheme="dark" data-stream="false" data-header="true"></div>
-						</div>
-						<p>
-							My music is the product of the development of my musical talents since my freshman year of High School
-							when I first started tinkering with a program called FL Studio. As I create more music I try to get better results by increasing melodic
-							variety and improving my mastering technique, and finding inspiration from new sources.
-						</p>
 						<p> Below is my entire body of released work. <a href="https://soundcloud.com/aaronopfer" title="Aaron Opfer's SoundCloud">It can also be found at SoundCloud.</a></p>
 
 					</div>
@@ -198,25 +188,19 @@
 		</div>
 		
 		<footer>
-			&copy; Aaron Opfer 2013. Some Rights Reserved.
+			&copy; Aaron Opfer 2013-2020. Some Rights Reserved.
 			<div>
-				<a title="Facebook" href="http://www.facebook.com/aaronopfer">Facebook</a>
-				<a title="MySpace" href="http://myspace.com/aaronopfer">MySpace</a>
 				<a title="SoundCloud" href="http://soundcloud.com/aaronopfer">SoundCloud</a>
 				<a title="GitHub" href="https://github.com/aaronopfer">GitHub</a>
 				<a title="LinkedIn" href="http://www.linkedin.com/pub/aaron-opfer/62/385/a9/">LinkedIn</a>
 				<a title="Reddit" href="http://www.reddit.com/user/aaronopfer">Reddit</a>
-				<a title="YouTube" href="http://www.youtube.com/user/aaronopfer">YouTube</a>
 				<a title="Gmail" href="mailto:me@aaronopfer.com">me@aaronopfer.com</a>
 			</div>
 		</footer>
 		<noscript id="can_has_javascript">
-
 				Hey buddy. You should consider enabling JavaScript. I mean,
 				I'm not telling you what to do or anything, but the site will
 				work a little better with it turned on.
-
-				<br><br>Thanks pumpkin.
 		</noscript>
 		<%=script_includes %>
 	</body>

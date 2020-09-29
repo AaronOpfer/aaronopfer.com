@@ -330,7 +330,7 @@ footer {
 	
 	.not-horrible  & {
 		@media screen, projection {
-			$siteList: (Facebook SoundCloud GitHub LinkedIn Gmail Reddit YouTube MySpace);
+			$siteList: (SoundCloud GitHub LinkedIn Gmail Reddit YouTube);
 			$siteSelector: "";
 			@each $site in $siteList {
 				@if $siteSelector != "" {
